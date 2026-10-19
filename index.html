@@ -70,6 +70,8 @@
     .result strong{display:block;margin-bottom:8px}
     .result .answer{white-space:pre-wrap}
 
+    .similarity{display:block;margin-top:8px;font-size:13px;color:var(--muted)}
+
     .stats{display:flex;gap:18px;color:var(--muted);font-size:13px;margin-top:18px}
 
     .hidden{display:none!important}
@@ -156,6 +158,7 @@
         <div class="result" id="result" role="status" aria-live="polite">
           <strong id="resultTitle"></strong>
           <div id="resultBody" class="answer"></div>
+          <span id="similarity" class="similarity" aria-hidden="true"></span>
         </div>
 
         <div class="stats" aria-hidden="false">
@@ -200,6 +203,39 @@
     let t = s.replace(/\s+/g, '');
     t = t.replace(/[.。｡\"'“”‘’„‚«»「」『』]/g,'');
     return t;
+  }
+
+  // Levenshtein distance for similarity
+  function levenshtein(a,b){
+    if(a === b) return 0;
+    const al = a.length, bl = b.length;
+    if(al === 0) return bl;
+    if(bl === 0) return al;
+    let matrix = Array.from({length: al+1}, () => new Array(bl+1));
+    for(let i=0;i<=al;i++) matrix[i][0] = i;
+    for(let j=0;j<=bl;j++) matrix[0][j] = j;
+    for(let i=1;i<=al;i++){
+      for(let j=1;j<=bl;j++){
+        const cost = a[i-1] === b[j-1] ? 0 : 1;
+        matrix[i][j] = Math.min(
+          matrix[i-1][j] + 1,
+          matrix[i][j-1] + 1,
+          matrix[i-1][j-1] + cost
+        );
+      }
+    }
+    return matrix[al][bl];
+  }
+
+  function similarityPercent(a,b){
+    const A = normalizeAnswer(String(a || ''));
+    const B = normalizeAnswer(String(b || ''));
+    if(!A && !B) return 100;
+    if(!A || !B) return 0;
+    const dist = levenshtein(A,B);
+    const maxLen = Math.max(A.length, B.length);
+    const score = Math.max(0, Math.round((1 - dist / maxLen) * 100));
+    return score;
   }
 
   function start(onlyWrong = false){
@@ -255,6 +291,7 @@
     $('answer').disabled = false;
     $('result').style.display = 'none';
     $('result').className = 'result';
+    $('similarity').textContent = '';
     $('check').classList.remove('hidden');
     $('next').classList.add('hidden');
     $('correctCount').textContent = `정답 ${correct}`;
@@ -277,10 +314,13 @@
       correct++;
       $('resultTitle').textContent = '✓ 정답입니다';
       $('resultBody').textContent = '입력한 해석이 기준 해석과 일치합니다.';
+      $('similarity').textContent = '';
     } else {
       wrong.push(pool[idx]);
       $('resultTitle').textContent = '✕ 오답입니다';
+      const sim = similarityPercent(normUser, normExpected);
       $('resultBody').textContent = '정확한 해석\n' + pool[idx].answer;
+      $('similarity').textContent = `유사도: ${sim}%`;
     }
     $('result').classList.add(ok ? 'good' : 'bad');
     $('result').style.display = 'block';
