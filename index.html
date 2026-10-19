@@ -5,77 +5,87 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>맹자읽기 TEST</title>
   <meta name="description" content="맹자 읽기 II - 한문 암송/해석 학습용 테스트 페이지">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+KR:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#ffffff;
-      --card:#ffffff;
-      --ink:#111827;
-      --muted:#6b7280;
-      --accent:#0f766e; /* teal */
-      --accent-weak:rgba(15,118,110,0.08);
-      --line:#e6e9ee;
-      --radius:10px;
-      --max-width:820px;
+      --bg:#f5f3ef;
+      --panel:#ffffff;
+      --ink:#181d20;
+      --muted:#66707a;
+      --accent:#1f4d42;
+      --accent-soft:rgba(31,77,66,0.06);
+      --line:#e8e4df;
+      --radius:12px;
+      --maxw: 860px;
     }
 
-    /* Reset + base */
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;color:var(--ink);font-family:'Noto Sans KR',system-ui,-apple-system,"Malgun Gothic",sans-serif;background:var(--bg)}
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',system-ui,-apple-system,'Malgun Gothic',sans-serif}
+    body{padding:16px 0}
 
-    /* Layout */
-    .wrap{max-width:var(--max-width);margin:36px auto;padding:20px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px}
+    .card{background:var(--panel);border:1px solid rgba(17,24,39,0.03);border-radius:10px;padding:18px 18px 16px;box-shadow:0 8px 24px rgba(15,23,42,0.02)}
 
-    header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
-    .brand{font-family:'Noto Serif TC','Noto Serif',serif;font-weight:700;color:var(--ink);font-size:18px}
-    .brand .sub{font-weight:600;color:var(--muted);font-size:12px;margin-left:8px}
+    header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:10px}
+    .brand{font-family:'Noto Serif TC','Noto Serif',serif;font-weight:700;font-size:18px;letter-spacing:.02em}
+    .brand .sub{font-size:12px;color:var(--muted);font-weight:600;margin-left:6px}
+    .seal{display:inline-flex;align-items:center;padding:5px 8px;border:1px solid rgba(31,77,66,0.12);border-radius:999px;color:var(--accent);background:rgba(31,77,66,0.02);font-size:12px;font-weight:600;letter-spacing:.06em}
 
-    h1{font-family:'Noto Serif TC','Noto Serif',serif;font-size:28px;margin:6px 0;color:var(--ink)}
-    p.lead{margin:6px 0 12px;color:var(--muted);font-size:14px}
+    h1{font-family:'Noto Serif TC','Noto Serif',serif;font-size:26px;line-height:1.05;margin:12px 0 8px;color:var(--ink)}
+    .lead{margin:0 0 10px;color:var(--muted);font-size:13px;line-height:1.65;max-width:640px}
 
-    /* compact toolbar */
-    .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0 14px}
-    select{appearance:none;border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:8px;font-size:14px;color:var(--ink)}
-    .btn{border:1px solid var(--line);background:transparent;padding:8px 10px;border-radius:8px;font-size:14px;cursor:pointer}
-    .btn.ghost{color:var(--accent);border-color:transparent}
-    .btn.primary{background:var(--accent);color:white;border-color:var(--accent)}
+    .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 14px}
+    select,button,textarea{font:inherit}
+    select{border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:8px;color:var(--ink);font-size:13px}
+    .btn{border:1px solid var(--line);background:transparent;padding:8px 12px;border-radius:8px;color:var(--ink);cursor:pointer;font-size:13px;transition:all .12s ease}
+    .btn:hover{border-color:rgba(31,77,66,0.2)}
+    .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .btn.ghost{color:var(--accent);background:rgba(31,77,66,0.02)}
+    .spacer{flex:1}
 
-    /* main exam area */
-    .panel{display:flex;flex-direction:column;gap:12px}
-    .meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px}
+    .panel{display:flex;flex-direction:column;gap:10px}
+    .meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px;gap:12px}
+    .progress{height:8px;border-radius:999px;background:var(--line);overflow:hidden}
+    .progress > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#2d6a5f);transition:width .3s ease}
 
-    .progress{height:8px;background:var(--line);border-radius:8px;overflow:hidden}
-    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#064e47);width:0%;transition:width .36s ease}
+    .hanmun{display:flex;align-items:center;justify-content:center;text-align:center;min-height:86px;padding:18px 12px;border-radius:10px;background:var(--accent-soft);font-family:'Noto Serif TC','Noto Serif',serif;font-weight:700;font-size:21px;line-height:1.6;color:var(--ink)}
+    .hanmun .fallback{color:var(--muted);font-size:14px}
 
-    .hanmun{font-family:'Noto Serif TC','Noto Serif','Noto Serif KR',serif;font-weight:700;font-size:34px;line-height:1.25;text-align:center;padding:18px;border-radius:10px;background:var(--accent-weak);color:var(--ink);min-height:88px;display:flex;align-items:center;justify-content:center}
-    .hanmun .fallback{color:var(--muted);font-weight:600;font-size:16px}
+    label.field{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px}
+    textarea#answer{width:100%;min-height:120px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:14px;line-height:1.7;color:var(--ink);resize:vertical}
+    textarea#answer:focus,select:focus,.btn:focus{outline:2px solid rgba(31,77,66,0.15);outline-offset:2px}
 
-    label.field{font-size:13px;font-weight:600;color:var(--muted)}
-    textarea#answer{width:100%;min-height:120px;padding:12px;border-radius:10px;border:1px solid var(--line);font-size:15px;color:var(--ink);resize:vertical}
+    .actions{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+    .actions .group{display:flex;gap:8px;flex-wrap:wrap}
 
-    .actions{display:flex;gap:8px;align-items:center}
-    .actions .group{display:flex;gap:8px}
+    .result{display:none;padding:12px;border-radius:10px;font-size:13px;line-height:1.65}
+    .result.good{background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);color:#0a5d45}
+    .result.bad{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.12);color:#991b1b}
+    .result .answer{margin-top:8px;white-space:pre-wrap}
 
-    .result{display:none;padding:12px;border-radius:10px;font-size:14px}
-    .result.good{background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.12);color:#064e47}
-    .result.bad{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.12);color:#b91c1c}
-    .result .answer{white-space:pre-wrap;margin-top:8px}
+    .stats{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-top:2px}
+    .hidden{display:none !important}
 
-    .stats{display:flex;gap:12px;color:var(--muted);font-size:13px}
+    .finish{display:none;text-align:center;padding:18px 8px 6px}
+    .finish h2{font-size:28px;margin:8px 0 10px;line-height:1.2}
+    .finish p{color:var(--muted);margin:0}
 
-    .finish{display:none;text-align:center;padding:22px}
+    footer{margin-top:12px;padding-top:8px;text-align:center;color:var(--muted);font-size:12px;letter-spacing:.04em}
 
-    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
-
-    @media(max-width:720px){
-      .wrap{margin:18px auto;padding:14px}
-      .hanmun{font-size:22px;padding:12px;min-height:64px}
-      h1{font-size:22px}
+    @media (max-width: 600px){
+      body{padding:10px 0}
+      .card{padding:14px 14px 12px}
       .toolbar{gap:6px}
-      textarea#answer{min-height:100px}
-      header{align-items:center}
+      .btn,select{width:auto}
+      .hanmun{min-height:74px;padding:14px 10px;font-size:18px}
+      h1{font-size:22px}
+      .lead{font-size:12px}
+      .actions{align-items:stretch}
+      .actions .group,.actions .btn{flex:1}
+      .actions .btn{justify-content:center}
     }
+
+    .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px}
   </style>
 </head>
 <body>
@@ -84,13 +94,14 @@
       <header>
         <div>
           <div class="brand">孟子讀記 <span class="sub">/ II</span></div>
-          <h1 style="margin:8px 0 0">맹자읽기 TEST</h1>
-          <p class="lead">한문을 읽고 해석을 입력하세요. PPT의 해석과 정확히 일치해야 정답으로 인정됩니다.</p>
+          <h1>맹자읽기 TEST</h1>
+          <p class="lead">한문을 읽고, 해석을 기억하고, 직접 써보세요. PPT에 적힌 해석과 정확히 일치하는 답안만 정답으로 인정합니다.</p>
         </div>
+        <div class="seal">白紙試驗</div>
       </header>
 
       <div class="toolbar" role="toolbar" aria-label="시험 도구">
-        <label class="visually-hidden" for="section">범위</label>
+        <label class="visually-hidden" for="section">범위 선택</label>
         <select id="section" aria-label="시험 범위">
           <option value="전체">전체 범위</option>
           <option>이루상</option>
@@ -99,9 +110,9 @@
           <option>만장하</option>
         </select>
 
-        <label class="visually-hidden" for="count">문제수</label>
+        <label class="visually-hidden" for="count">문제 개수</label>
         <select id="count" aria-label="문제 개수">
-          <option value="all">전체</option>
+          <option value="all">전체 문제</option>
           <option value="5">5문제</option>
           <option value="10">10문제</option>
           <option value="15">15문제</option>
@@ -112,13 +123,13 @@
         <button id="retry" class="btn" type="button">오답만 재시험</button>
       </div>
 
-      <section class="panel" aria-labelledby="quiz">
+      <section class="panel" id="quiz">
         <div class="meta">
-          <div id="category" aria-live="polite"></div>
-          <div id="progress" aria-live="polite" style="color:var(--muted)"></div>
+          <span id="category" aria-live="polite"></span>
+          <span id="progress" aria-live="polite"></span>
         </div>
 
-        <div class="progress" role="progressbar" aria-label="진행률" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress" role="progressbar" aria-label="진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
           <i id="fill"></i>
         </div>
 
@@ -126,15 +137,17 @@
           <span class="fallback">한문 문장이 여기 표시됩니다.</span>
         </div>
 
-        <label class="field" for="answer">나의 해석</label>
-        <textarea id="answer" placeholder="한글 해석을 정확히 입력하세요." spellcheck="false" aria-label="해석 입력"></textarea>
+        <div>
+          <label class="field" for="answer">나의 해석</label>
+          <textarea id="answer" placeholder="한글 해석을 정확히 입력하세요." spellcheck="false" aria-label="해석 입력"></textarea>
+        </div>
 
         <div class="actions">
           <div class="group">
             <button id="skip" class="btn" type="button">건너뛰기</button>
             <button id="check" class="btn primary" type="button">정답 확인</button>
           </div>
-          <button id="next" class="btn primary hidden" type="button">다음</button>
+          <button id="next" class="btn primary hidden" type="button">다음 문장</button>
         </div>
 
         <div id="result" class="result" role="status" aria-live="polite">
@@ -145,48 +158,32 @@
         <div class="stats">
           <span id="correctCount">정답 0</span>
           <span id="wrongCount">오답 0</span>
-          <span id="percent" style="color:var(--muted)">진행 0%</span>
-        </div>
-
-        <div class="finish" id="finish">
-          <div style="font-size:36px">卷</div>
-          <h2>시험 완료</h2>
-          <p id="summary"></p>
-          <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
-            <button class="btn primary" id="finishRetry">다시 풀기</button>
-            <button class="btn" id="finishWrong">오답 재시험</button>
-          </div>
+          <span id="percent">진행 0%</span>
         </div>
       </section>
 
-      <p style="margin-top:14px;color:var(--muted);font-size:13px">※ 띄어쓰기·문장부호·맞춤법까지 원문과 일치해야 정답으로 인정합니다. 불필요한 앞뒤 공백만 제거합니다.</p>
-
+      <div class="finish" id="finish">
+        <div style="font-size:36px;line-height:1">卷</div>
+        <h2>시험 완료</h2>
+        <p id="summary"></p>
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap">
+          <button class="btn primary" type="button" id="finishRetry">다시 풀기</button>
+          <button class="btn" type="button" id="finishWrong">오답 재시험</button>
+        </div>
+      </div>
     </div>
 
-    <footer>
-      made by mandeu
-    </footer>
+    <footer>made by mandeu</footer>
   </div>
 
   <script>
   const DATA = [
-    {"section":"이루상","number":"1.1","hanmun":"孟子曰: 離婁(이루)之明과 公輸子(공수자)之巧로도 不以規矩면 不能成方圓이요","answer":"맹자께서 말씀하였�[...]"},
-    {"section":"이루상","number":"1.1-2","hanmun":"師曠(사광)之聰으로도 不以六律이면 不能正五音이요","answer":"사광의 귀밝음으로도 6율을 쓰지 않으면 5음�[...]"},
-    {"section":"이루상","number":"1.1-3","hanmun":"堯舜之道로도 不以仁政이면 不能平治天下니라.","answer":"요순의 도로도 어진 정치를 쓰지 않으면 천하를 ��[...]"},
-
-    {"section":"이루상","number":"1.2","hanmun":"今有仁心,仁聞이로되 而民이 不被其澤하여","answer":"지금 (왕이) 어진 마음과 어진 마음이 있다는 소문은 있�[...]"},
-    {"section":"이루상","number":"1.2-2","hanmun":"不可法於後世者는 不行先王之道也일새니라.","answer":"후세에 법이 되지 못하는 것은 선왕의 도를 행하지 ��[...]"},
-
-    {"section":"이루상","number":"1.3","hanmun":"故로 曰; ‘徒善이 不足以爲政이요 徒法이 不能以自行이라’ 하니라.","answer":"그러므로 이르기를, ‘한갓 ��[...]"},
-
-    {"section":"이루상","number":"1.4","hanmun":"詩云 不愆不忘은 率由舊章이라 하니","answer":"시경에 이르기를, ‘잘못하지 않고 잊지 않음은 옛 법을 따르��[...]"},
-    {"section":"이루상","number":"1.4-2","hanmun":"遵先王之法而過者 未之有也니라.","answer":"선왕의 법을 따르고서 잘못되는 자는 있지 않다."},
-
-    {"section":"이루상","number":"1.7","hanmun":"是以로 惟仁者아 宜在高位니","answer":"이 때문에 오직 어진 자만이 높은 지위에 있어야 하니,"},
-    {"section":"이루상","number":"1.7-2","hanmun":"不仁而在高位면 是는 播其惡於衆也니라.","answer":"어질지 않고서 높은 지위에 있으면 이는 그 악을 대중에�[...]"},
-
-    {"section":"이루상","number":"4.1","hanmun":"孟子曰: 愛人不親이어든 反其仁하고 治人不治어든 反其智하고 禮人不答이어든 反其敬이니라.","answer":"맹자[...]"},
-
+    {"section":"이루상","number":"1.1","hanmun":"孟子曰: 離婁(이루)之明과 公輸子(공수자)之巧로도 不以規矩면 不能成方圓이요","answer":"맹자께서 말씀하였고"},
+    {"section":"이루상","number":"1.1-2","hanmun":"師曠(사광)之聰으로도 不以六律이면 不能正五音이요","answer":"사광의 귀밝음으로도 6율을 쓰지 않으면 5음을 바로잡지 못하니"},
+    {"section":"이루상","number":"1.1-3","hanmun":"堯舜之道로도 不以仁政이면 不能平治天下니라.","answer":"요순의 도로도 어진 정치를 쓰지 않으면 천하를 평정할 수 없느니라."},
+    {"section":"이루상","number":"1.2","hanmun":"今有仁心,仁聞이로되 而民이 不被其澤하여","answer":"지금 어진 마음과 어진 명성이 있으나 백성이 그 은혜를 입지 아니하니"},
+    {"section":"이루상","number":"1.2-2","hanmun":"不可法於後世者는 不行先王之道也일새니라.","answer":"후세에 법이 되지 못하는 것은 선왕의 도를 행하지 아니하기 때문이니라."},
+    {"section":"이루상","number":"1.3","hanmun":"故로 曰; ‘徒善이 不足以爲政이요 徒法이 不能以自行이라’ 하니라.","answer":"그러므로 이르기를, ‘한갓 선함만으로는 정치를 할 수 없고 한갓 법만으로는 스스로 행해지지 못한다.’ 하니라."}
   ];
 
   let pool = [], idx = 0, wrong = [], correct = 0, answered = false;
@@ -202,8 +199,8 @@
 
   function normalizeAnswer(s){
     if(typeof s !== 'string') return '';
-    let t = s.replace(/\s+/g, '');
-    t = t.replace(/[.。｡\"'“”‘’„‚«»「」『』]/g,'');
+    let t = s.replace(/\s+/g,'');
+    t = t.replace(/[.。｡"'“”‘’「」『』]/g,'');
     return t;
   }
 
@@ -227,7 +224,7 @@
     correct = 0;
     answered = false;
     $('finish').style.display = 'none';
-    $('quiz')?.classList?.remove('hidden');
+    $('quiz').style.display = 'block';
     render();
   }
 
@@ -240,14 +237,15 @@
 
   function render(){
     if(idx >= pool.length){
-      $('quiz')?.classList?.add('hidden');
-      $('finish').style.display = 'block';
+      $('quiz').style.display='none';
+      $('finish').style.display='block';
       const skipped = pool.length - (correct + wrong.length);
       $('summary').textContent = `${pool.length}문장 중 ${correct}개 정답 · ${wrong.length}개 오답 · ${skipped}개 건너뜀`;
       setProgress(100);
       $('percent').textContent = '진행 100%';
       return;
     }
+
     const x = pool[idx];
     answered = false;
     $('category').textContent = `${x.section} · ${x.number}`;
@@ -255,19 +253,19 @@
     const percent = Math.round((idx) / Math.max(1,pool.length) * 100);
     setProgress(percent);
     $('percent').textContent = `진행 ${percent}%`;
+
     const hanEl = $('hanmun');
     const hanText = (x.hanmun == null) ? '' : String(x.hanmun).trim();
     if (hanText) {
       hanEl.textContent = hanText;
-      hanEl.classList.remove('empty');
     } else {
       hanEl.innerHTML = '<span class="fallback">한문 문장이 여기 표시됩니다.</span>';
-      hanEl.classList.add('empty');
     }
-    $('answer').value = '';
-    $('answer').disabled = false;
-    $('result').style.display = 'none';
-    $('result').className = 'result';
+
+    $('answer').value='';
+    $('answer').disabled=false;
+    $('result').style.display='none';
+    $('result').className='result';
     $('check').classList.remove('hidden');
     $('next').classList.add('hidden');
     $('correctCount').textContent = `정답 ${correct}`;
@@ -278,14 +276,10 @@
   function check(){
     if(answered) return;
     let a = $('answer').value.trim();
-    if(!a){
-      alert('해석을 입력하세요.');
-      return;
-    }
+    if(!a){ alert('해석을 입력하세요.'); return; }
+
     answered = true;
-    const normUser = normalizeAnswer(a);
-    const normExpected = normalizeAnswer(pool[idx].answer);
-    const ok = normUser === normExpected;
+    const ok = normalizeAnswer(a) === normalizeAnswer(pool[idx].answer);
 
     if(ok){
       correct++;
@@ -298,35 +292,31 @@
     }
 
     $('result').classList.add(ok ? 'good' : 'bad');
-    $('result').style.display = 'block';
-    $('answer').disabled = true;
+    $('result').style.display='block';
+    $('answer').disabled=true;
     $('check').classList.add('hidden');
     $('next').classList.remove('hidden');
     $('correctCount').textContent = `정답 ${correct}`;
     $('wrongCount').textContent = `오답 ${wrong.length}`;
   }
 
-  function next(){
-    idx++;
-    render();
-  }
+  function next(){ idx++; render(); }
 
-  document.getElementById('check').onclick = check;
-  document.getElementById('next').onclick = next;
-  document.getElementById('skip').onclick = () => { idx++; render(); };
-  document.getElementById('restart').onclick = () => start(false);
-  document.getElementById('retry').onclick = () => start(true);
-  document.getElementById('finishRetry').onclick = () => start(false);
-  document.getElementById('finishWrong').onclick = () => start(true);
+  $('check').onclick = check;
+  $('next').onclick = next;
+  $('skip').onclick = () => { idx++; render(); };
+  $('restart').onclick = () => start(false);
+  $('retry').onclick = () => start(true);
+  $('finishRetry').onclick = () => start(false);
+  $('finishWrong').onclick = () => start(true);
 
-  document.getElementById('answer').addEventListener('keydown', e => {
+  $('answer').addEventListener('keydown', e => {
     if(e.ctrlKey && e.key === 'Enter'){
       e.preventDefault();
       answered ? next() : check();
     }
   });
 
-  // Initialize
   start();
   </script>
 </body>
