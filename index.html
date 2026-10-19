@@ -60,6 +60,10 @@
     /* PRIORITIZE fonts that include Traditional/Full-width CJK glyphs for 한자 display */
     .hanmun{font-family:'Noto Serif TC','Source Han Serif','Noto Serif KR','MingLiU','PMingLiU','SimSun','Apple SD Gothic Neo','Malgun Gothic',serif;font-weight:700;letter-spacing:.04em;font-size:[...]
 
+    /* Fallback styling for when 한문 is missing */
+    .hanmun .fallback { color:var(--muted); font-weight:600; font-size:clamp(20px,4.5vw,34px); line-height:1.4 }
+    .hanmun.empty .fallback { opacity:0.95 }
+
     .fieldlabel{display:block;font-size:13px;font-weight:700;margin-bottom:10px}
     textarea{width:100%;min-height:140px;resize:vertical;border:1px solid var(--line);background:#fff;border-radius:10px;padding:16px;line-height:1.8;color:var(--ink);font-size:15px}
     textarea:focus{outline:3px solid rgba(36,89,67,0.12)}
@@ -145,7 +149,9 @@
           <div class="fill" id="fill" style="width:0%"></div>
         </div>
 
-        <div class="hanmun" id="hanmun" aria-label="한문 문장"></div>
+        <div class="hanmun" id="hanmun" role="region" aria-live="polite" aria-label="한문 문장">
+          <span class="fallback">한문 문장이 여기 표시됩니다. (문제가 보이지 않으면 데이터 로드 또는 스크립트를 확인하세요.)</span>
+        </div>
 
         <label class="fieldlabel" for="answer">나의 해석</label>
         <textarea id="answer" placeholder="한글 해석을 정확히 입력하세요." spellcheck="false" aria-label="해석 입력"></textarea>
@@ -206,32 +212,6 @@
 
     {"section":"이루상","number":"4.1","hanmun":"孟子曰: 愛人不親이어든 反其仁하고 治人不治어든 反其智하고 禮人不答이어든 反其敬이니라.","answer":"맹자[...]"},
 
-    {"section":"이루상","number":"4.2","hanmun":"行有不得者어든 皆反求諸(저)己니 其身正而天下歸之니라.","answer":"행하고서도 얻지 못하는 것이 있다면, 모[...]"},
-
-    {"section":"이루상","number":"4.3","hanmun":"詩云 永言配命이 自求多福이라 하니라.","answer":"<<시경>>에 이르기를, ‘길이 천명에 부합할 것을 생각함이 �[...]"},
-
-    {"section":"이루상","number":"8.4","hanmun":"夫人必自侮然後에 人侮之하며\n家必自毁而後에 人毁之하며\n國必自伐而後에 人伐之하나니라.","answer":"사람[...]"},
-
-    {"section":"이루상","number":"8.5","hanmun":"太甲曰: 天作孽은 猶可違어니와\n自作孽은 不可活이라 하니 此之謂也니라.","answer":"<태갑>에 이르기를, ‘하[...]"},
-
-    {"section":"이루상","number":"10.1","hanmun":"孟子曰: 自暴者는 不可與有言也요\n自棄者는 不可與有爲也니\n言非禮義를 謂之自暴也요\n吾身不能居仁由��[...]"},
-
-    {"section":"이루상","number":"10.2","hanmun":"仁은 人之安宅也요\n義는 人之正路也라.","answer":"인은 사람의 편안한 집이고, 의는 사람의 바른 길이다."},
-
-    {"section":"이루상","number":"10.3","hanmun":"曠安宅而弗居며 舍正路而不由하니 哀哉라!", "answer":"편안한 집을 비워두고 거처하지 않으며, 바른 길을 버�[...]"},
-
-    {"section":"이루상","number":"15.1","hanmun":"孟子曰: 存乎人者 莫良於眸子하니\n眸子不能掩其惡하나니 胸中이 正이면 則眸子瞭焉하고\n胸中이 不正이��[...]"},
-
-    {"section":"이루상","number":"15.2","hanmun":"聽其言也요 觀其眸子면 人焉廋哉리오?", "answer":"그의 말을 들어보고 그의 눈을 보면, 사람이 어찌 자신을 ��[...]"},
-
-    {"section":"이루상","number":"18.1","hanmun":"公孫丑曰: 君子之不敎子는 何也잇고?", "answer":"공손추가 물었다. ‘군자가 자식을 직접 가르치지 않는 것은[...]"},
-    {"section":"이루상","number":"18.2","hanmun":"孟子曰: ‘勢不行也니라.\n敎者는 必以正이니 以正不行이어든 繼之以怒하고\n夫子敎我以正하사되 夫子도 �[...]"},
-    {"section":"이루상","number":"18.3","hanmun":"古者에 易(역)子而敎之하니라.","answer":"옛날에는 자식을 바꾸어 가르쳤다."},
-    {"section":"이루상","number":"18.4","hanmun":"父子之間은 不責善이니\n責善則離하나니 離則不祥이 莫大焉이니라.","answer":"부자간에는 선함을 책하지 않�[...]"},
-
-    {"section":"이루상","number":"21","hanmun":"孟子曰: “有不虞之譽하며 有求全之毁하니라.”", "answer":"맹자께서 말씀하셨다. “예상치 못한 명예가 있으�[...]"},
-    {"section":"이루상","number":"22","hanmun":"孟子曰: 人之易(이)其言也는 無責耳矣니라.", "answer":"맹자께서 말씀하셨다. “사람이 말을 쉽게 하는 것은 꾸�[...]"},
-    {"section":"이루상","number":"23","hanmun":"孟子曰: “人之患이 在好爲人師니라.”", "answer":"맹자께서 말씀하셨다. “사람의 문제는 남의 스승되기 좋아[...]"}
   ];
 
   let pool = [], idx = 0, wrong = [], correct = 0, answered = false;
@@ -300,7 +280,16 @@
     const percent = Math.round((idx) / Math.max(1,pool.length) * 100);
     setProgress(percent);
     $('percent').textContent = `진행 ${percent}%`;
-    $('hanmun').textContent = x.hanmun;
+    // Render 한문 with safe fallback
+    const hanEl = $('hanmun');
+    const hanText = (x.hanmun == null) ? '' : String(x.hanmun).trim();
+    if (hanText) {
+      hanEl.textContent = hanText;
+      hanEl.classList.remove('empty');
+    } else {
+      hanEl.innerHTML = '<span class="fallback">한문 문장이 여기 표시됩니다. (문제가 보이지 않으면 데이터 로드 또는 스크립트를 확인하세요.)</span>';
+      hanEl.classList.add('empty');
+    }
     $('answer').value = '';
     $('answer').disabled = false;
     $('result').style.display = 'none';
