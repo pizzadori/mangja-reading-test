@@ -310,19 +310,29 @@
     const normUser = normalizeAnswer(a);
     const normExpected = normalizeAnswer(pool[idx].answer);
     const ok = normUser === normExpected;
-    if(ok){
+    let sim = 0;
+    if(!ok) sim = similarityPercent(normUser, normExpected);
+
+    // If exact match OR similarity >= 80, treat as correct
+    if(ok || sim >= 80){
       correct++;
-      $('resultTitle').textContent = '✓ 정답입니다';
-      $('resultBody').textContent = '입력한 해석이 기준 해석과 일치합니다.';
-      $('similarity').textContent = '';
+      if(ok){
+        $('resultTitle').textContent = '✓ 정답입니다';
+        $('resultBody').textContent = '입력한 해석이 기준 해석과 일치합니다.';
+        $('similarity').textContent = '';
+      } else {
+        $('resultTitle').textContent = '✓ 정답입니다 (근사)';
+        $('resultBody').textContent = `유사도: ${sim}% — 기준 해석과 충분히 유사하여 정답으로 처리했습니다.\n정답 기준: ${pool[idx].answer}`;
+        $('similarity').textContent = '';
+      }
     } else {
       wrong.push(pool[idx]);
       $('resultTitle').textContent = '✕ 오답입니다';
-      const sim = similarityPercent(normUser, normExpected);
       $('resultBody').textContent = '정확한 해석\n' + pool[idx].answer;
       $('similarity').textContent = `유사도: ${sim}%`;
     }
-    $('result').classList.add(ok ? 'good' : 'bad');
+
+    $('result').classList.add((ok || sim >= 80) ? 'good' : 'bad');
     $('result').style.display = 'block';
     $('answer').disabled = true;
     $('check').classList.add('hidden');
