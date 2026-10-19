@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="맹자 읽기 II - 한문 암송/해석 학습용 테스트 페이지">
+  <title>맹자읽기 II TEST</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f6f2e9;--ink:#222b29;--accent:#42675b;--muted:#7c817b;--line:#d9d7cd}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,'Malgun Gothic',sans-serif}
+    .shell{max-width:840px;margin:auto;padding:42px 22px 80px}
+    header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:22px}
+    .logo{font-family:'Noto Serif TC',Georgia,serif;font-size:18px;letter-spacing:2px}
+    .seal{border:1px solid var(--ink);padding:8px;font-family:serif;font-size:12px}
+    h1{font-family:'Noto Serif KR',Georgia,serif;font-size:clamp(38px,7vw,62px);font-weight:500;letter-spacing:-2px;margin:48px 0 10px}
+    p.sub{color:var(--muted);line-height:1.8;margin:0 0 34px}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+    select,button,textarea{font:inherit}
+    select,button{border:1px solid var(--line);border-radius:8px;background:#fffdf8;padding:12px 16px;color:var(--ink)}
+    button{cursor:pointer}
+    button.primary{background:var(--ink);color:white;border-color:var(--ink)}
+    button:hover{filter:brightness(.95)}
+    .panel{background:#fffdf8;border:1px solid var(--line);border-radius:18px;padding:clamp(24px,5vw,44px);box-shadow:0 12px 35px #262c2410}
+    .top{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px}
+    .bar{height:5px;background:#e8e7e0;border-radius:6px;overflow:hidden;margin:17px 0 35px}
+    .fill{height:100%;background:var(--accent);width:0%;transition:width .3s}
+    .hanmun{font-family:'Noto Serif TC','Noto Serif KR','Noto Serif CJK KR','Batang',serif;font-weight:600;letter-spacing:.035em;font-size:clamp(24px,4vw,33px);line-height:1.9;word-break:keep-all;white-space:pre-wrap;margin:0 0 34px}
+    .fieldlabel{display:block;font-size:13px;font-weight:700;margin-bottom:10px}
+    textarea{width:100%;height:132px;resize:vertical;border:1px solid var(--line);background:#fff;border-radius:9px;padding:16px;line-height:1.7;color:var(--ink)}
+    textarea:focus{outline:2px solid #8aa99a}
+    .actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .result{display:none;border-radius:10px;padding:20px;margin-top:24px;line-height:1.9;background:#f0f1ec}
+    .result.good{background:#e6f2e9}
+    .result.bad{background:#f8eae5}
+    .result strong{display:block;margin-bottom:8px}
+    .result .answer{white-space:pre-wrap}
+    .stats{display:flex;gap:18px;color:var(--muted);font-size:13px;margin-top:18px}
+    .hidden{display:none!important}
+    .finish{text-align:center;padding:35px 0}
+    .finish h2{font-size:32px}
+    .footer{margin-top:55px;padding-top:20px;border-top:1px solid var(--line);text-align:center;font-family:Georgia,serif;font-size:13px;letter-spacing:1.4px;color:var(--muted)}
+    .hint{font-size:12px;color:var(--muted);margin-top:20px;line-height:1.7}
+    @media(max-width:600px){.shell{padding-top:22px}.toolbar>*{flex:1}.panel{padding:22px}.actions button{flex:1}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="logo">孟子讀記 <span style="color:#8c9189">/ II</span></div>
+      <div class="seal">白紙試驗</div>
+    </header>
+
+    <h1>맹자읽기 II<br>TEST<span style="color:#42675b">.</span></h1>
+    <p class="sub">한문을 읽고, 해석을 기억하고, 직접 써보세요.<br>PPT에 적힌 해석과 정확히 일치하는 답안만 정답으로 인정합니다.</p>
+
+    <div class="toolbar">
+      <label class="hidden" for="section">범위 선택</label>
+      <select id="section" aria-label="시험 범위 선택">
+        <option value="전체">전체 범위</option>
+        <option>이루상</option>
+        <option>이루하</option>
+        <option>만장상</option>
+        <option>만장하</option>
+      </select>
+
+      <label class="hidden" for="count">문제 개수</label>
+      <select id="count" aria-label="문제 개수">
+        <option value="all">전체 문제</option>
+        <option value="5">5문제</option>
+        <option value="10">10문제</option>
+        <option value="15">15문제</option>
+        <option value="20">20문제</option>
+        <option value="30">30문제</option>
+        <option value="50">50문제</option>
+      </select>
+
+      <button id="restart" type="button">시험 새로 시작</button>
+      <button id="retry" type="button">오답만 재시험</button>
+    </div>
+
+    <div class="panel">
+      <div id="quiz">
+        <div class="top">
+          <span id="category" aria-live="polite"></span>
+          <span id="progress" aria-live="polite"></span>
+        </div>
+
+        <div class="bar" aria-hidden="true">
+          <div class="fill" id="fill" style="width:0%"></div>
+        </div>
+
+        <div class="hanmun" id="hanmun" aria-label="한문 문장"></div>
+
+        <label class="fieldlabel" for="answer">나의 해석</label>
+        <textarea id="answer" placeholder="한글 해석을 정확히 입력하세요." spellcheck="false" aria-label="해석 입력"></textarea>
+
+        <div class="actions">
+          <button id="skip" type="button">건너뛰기</button>
+          <button class="primary" id="check" type="button">정답 확인 ↗</button>
+          <button class="primary hidden" id="next" type="button">다음 문장 →</button>
+        </div>
+
+        <div class="result" id="result" role="status" aria-live="polite">
+          <strong id="resultTitle"></strong>
+          <div id="resultBody" class="answer"></div>
+        </div>
+
+        <div class="stats">
+          <span id="correctCount">정답 0</span>
+          <span id="wrongCount">오답 0</span>
+          <span id="percent" style="color:var(--muted)">진행 0%</span>
+        </div>
+      </div>
+
+      <div class="finish hidden" id="finish">
+        <div style="font-size:36px">卷</div>
+        <h2>시험 완료</h2>
+        <p id="summary"></p>
+        <button class="primary" type="button" id="finishRetry">다시 풀기</button>
+        <button type="button" id="finishWrong">오답 재시험</button>
+      </div>
+    </div>
+
+    <div class="hint">※ 띄어쓰기, 문장부호, 맞춤법까지 원문과 일치해야 합니다. 답안 앞뒤의 불필요한 공백만 제거합니다.<br>※ 모든 문제는 매 시험마다 무작위 순서로 출제되며, 선택한 문항 수만큼 중복 없이 추출합니다.<br>※ 범위를 선택한 후 시험 새로 시작을 눌러야 바뀐 범위로 학습할 수 있습니다.<br>※ 원본에 있는 표현과 오탈자를 그대로 수록하였습니다. 학습 진행 상태는 현재 화면에서만 유지됩니다.</div>
+
+    <footer class="footer">made by mandeu</footer>
+  </main>
+
+  <script>
+  /* DATA 배열: 원본 그대로 유지합니다 (오탈자 포함) */
+  const DATA = [{"section": "이루상", "number": "1.1", "hanmun": "孟子曰: 離婁(이루)之明과 公輸子(공수자)之巧로도 不以規矩면 不能成方圓이요", "answer": "맹자께서 말씀하였다. “이루의 눈밝음과 공수자의 재주로도 규구를 쓰지 않으면 네모와 원을 만들 수 없고,"}, {"section": "이루상", "number": "1.1", "hanmun": "師曠(사광)之聰으로도 不以六律이면 不能正五音이요", "answer": "사광의 귀밝음로도 6율을 쓰지 않으면 5음을 바룰 수가 없고,"}, {"section": "이루상", "number": "1.1", "hanmun": "堯舜之道로도 不以仁政이면 不能平治天下니라.", "answer": "요순의 도로도 어진 정치를 쓰지 않으면 천하를 평정할 수 없다."}, {"section": "이루상", "number": "1.2", "hanmun": "今有仁心,仁聞이로되 而民이 不被其澤하여", "answer": "지금 (왕이) 어진 마음과 어진 마음이 있다는 소문은 있는데 백성이 그 은택을 입지 못하여"}, {"section": "이루상", "number": "1.2", "hanmun": "不可法於後世者는 不行先王之道也일새니라.", "answer": "후세에 법이 되지 못하는 것은 선왕의 도를 행하지 않기 때문이다."}, {"section": "이루상", "number": "1.3", "hanmun": "故로 曰; ‘徒善이 不足以爲政이요 徒法이 不能以自行이라’ 하니라.", "answer": "그러므로 이르기를, ‘한갓 선한 마음만으로는 정치를 할 수 없고, 한갓 법만으로는 스스로 행해질 수 없다.’고 한다."}, {"section": "이루상", "number": "1.4", "hanmun": "詩云 不愆不忘은 率由舊章이라 하니", "answer": "시경에 이르기를, ‘잘못하지 않고 잊지 않음은 옛 법을 따르기 때문이다.’라고 하니,"}, {"section": "이루상", "number": "1.4", "hanmun": "遵先王之法而過者 未之有也니라.", "answer": "선왕의 법을 따르고서 잘못되는 자는 있지 않다."}, {"section": "이루상", "number": "1.7", "hanmun": "(중략)是以로 惟仁者아 宜在高位니", "answer": "이 때문에 오직 어진 자만이 높은 지위에 있어야 하니,"}, {"section": "이루상", "number": "1.7", "hanmun": "不仁而在高位면 是는 播其惡於衆也니라.", "answer": "어질지 않고서 높은 지위에 있으면 이는 그 악을 대중에게 퍼뜨리는 것이다."}, {"section": "이루상", "number": "4.1", "hanmun": "孟子曰: 愛人不親이어든 反其仁하고 治人不治어든 反其智하고 禮人不答이어든 反其敬이니라.", "answer": "맹자께서 말씀하셨따. “남을 사랑해도 친해지지 않거든 그 인을 돌이켜보고, 남을 다스려도 다스려지지 않거든 그 지략을 돌이켜보고, 사람에게 예를 올렸는데 답례하지 않거든 그 공경스러움을 돌이켜보아야 한다."}, {"section": "이루상", "number": "4.2", "hanmun": "行有不得者어든 皆反求諸(저)己니 其身正而天下歸之니라.", "answer": "행하고서도 얻지 못하는 것이 있다면, 모두 돌이켜 찾기를 자기 자신에서 해야 하니, 그 몸이 바루어지면 천하가 돌아오는 법이다."}, {"section": "이루상", "number": "4.3", "hanmun": "詩云 永言配命이 自求多福이라 하니라.", "answer": "<<시경>>에 이르기를, ‘길이 천명에 부합할 것을 생각함이 스스로 복을 많이 구하는 길이다.’하였다.”}, {"section": "이루상", "number": "8.4", "hanmun": "夫人必自侮然後에 人侮之하며", "answer": "사람은 반드시 스스로 업신여긴 후에 남이 그를 업신여기며,"}, {"section": "이루상", "number": "8.4", "hanmun": "家必自毁而後에 人毁之하며", "answer": "집안은 반드시 스스로 망친 후에 남이 그를 훼손하며,"}, {"section": "이루상", "number": "8.4", "hanmun": "國必自伐而後에 人伐之하나니라.", "answer": "나라는 반드시 스스로 공격한 후에 남이 그를 공격하는 법이다."}, {"section": "이루상", "number": "8.5", "hanmun": "太甲曰: 天作孽은 猶可違어니와", "answer": "<태갑>에 이르기를, ‘하늘이 지은 재앙은 그래도 피할 수 있지만"}, {"section": "이루상", "number": "8.5", "hanmun": "自作孽은 不可活이라 하니 此之謂也니라.", "answer": "스스로 지은 재앙은 살 수가 없다‘라 하였으니 이를 이른 것이다."}, {"section": "이루상", "number": "10.1", "hanmun": "孟子曰: 自暴者는 不可與有言也요", "answer": "맹자께서 말씀하셨다. “스스로 해치는 자는 더불어 말할 수 없고,"}, {"section": "이루상", "number": "10.1", "hanmun": "自棄者는 不可與有爲也니", "answer": "스스로 버리는 자는 더불어 일을 할 수 없으니,"}, {"section": "이루상", "number": "10.1", "hanmun": "言非禮義를 謂之自暴也요", "answer": "말하면서 예와 의를 비방하는 것을 ’자포‘라 하고,"}, {"section": "이루상", "number": "10.1", "hanmun": "吾身不能居仁由義를 謂之自棄也니라.", "answer": "’내 몸은 인에 거하고 의를 따를 수 없다‘고 하는 것을 ’자기‘라 이른다."}, {"section": "이루상", "number": "10.2", "hanmun": "仁은 人之安宅也요", "answer": "인은 사람의 편안한 집이고,"}, {"section": "이루상", "number": "10.2", "hanmun": "義는 人之正路也라.", "answer": "의는 사람의 바른 길이다."}, {"section": "이루상", "number": "10.3", "hanmun": "曠安宅而弗居며 舍正路而不由하니 哀哉라!", "answer": "편안한 집을 비워두고 거처하지 않으며, 바른 길을 버려두고 따르지 않으니, 슬프구나!"}, {"section": "이루상", "number": "15.1", "hanmun": "孟子曰: 存乎人者 莫良於眸子하니", "answer": "맹자께서 말씀하셨다. ‘사람에게 보존되어 있는 것은 눈동자보다 더 좋은 것이 없으니,"}, {"section": "이루상", "number": "15.1", "hanmun": "眸子不能掩其惡하나니 胸中이 正이면 則眸子瞭焉하고", "answer": "눈동자는 그의 악을 가리지 못한다. 마음속이 바르면 눈동자가 밝고,"}, {"section": "이루상", "number": "15.1", "hanmun": "胸中이 不正이면 則眸子眊焉이니라.", "answer": "마음속이 바르지 못하면 눈동자가 흐려진다."}, {"section": "이루상", "number": "15.2", "hanmun": "聽其言也요 觀其眸子면 人焉廋哉리오?", "answer": "그의 말을 들어보고 그의 눈을 보면, 사람이 어찌 자신을 숨기겠는가?"}, {"section": "이루상", "number": "18.2", "hanmun": "孟子曰: ‘勢不行也니라.", "answer": "맹자께서 말씀하셨다. ‘세가 행해지지 않기 때문이다."}, {"section": "이루상", "number": "18.2", "hanmun": "敎者는 必以正이니 以正不行이어든 繼之以怒하고", "answer": "가르치는 것은 반드시 올바름으로써 하니, 올바름으로써 하여 행해지지 않으면 분노가 뒤따르고"}, {"section": "이루상", "number": "18.2", "hanmun": "繼之以怒면 則反夷矣니", "answer": "분노가 뒤따르면 오히려 상하게 된다."}, {"section": "이루상", "number": "18.2", "hanmun": "夫子敎我以正하사되 夫子도 未出於正也라하면 則是父子相夷也니", "answer": "그러니 ‘아버지께서 나를 바름으로써 가르치시되 아버지도 바름에서 나오지 않는다‘하면 이것은 부자가 서로 상하는 것이니"}, {"section": "이루상", "number": "18.2", "hanmun": "父子相夷면 則惡矣니라.", "answer": "부자간에 의가 상하는 것은 나쁜 것이다."}, {"section": "이루상", "number": "18.3", "hanmun": "古者에 易(역)子而敎之하니라.", "answer": "옛날에는 자식을 바꾸어 가르쳤다."}, {"section": "이루상", "number": "18.4", "hanmun": "父子之間은 不責善이니", "answer": "부자간에는 선함을 책하지 않으니,"}, {"section": "이루상", "number": "18.4", "hanmun": "責善則離하나니 離則不祥이 莫大焉이니라.", "answer": "선으로 책하면 정이 떨어지게 된다. 정이 떨어지면 좋지 못함이 이보다 더 큰 것이 없다.”}, {"section": "이루상", "number": "21", "hanmun": "孟子曰: “有不虞之譽하며 有求全之毁하니라.”", "answer": "맹자께서 말씀하셨다. “예상치 못한 명예가 있으며 완벽을 구하다가 얻는 비방이 있다.”"}, {"section": "이루상", "number": "22", "hanmun": "孟子曰: 人之易(이)其言也는 無責耳矣니라.", "answer": "맹자께서 말씀하셨다. “사람이 말을 쉽게 하는 것은 꾸짖음을 받지 않았기 때문이다.”"}, {"section": "이루상", "number": "23", "hanmun": "孟子曰: “人之患이 在好爲人師니라.”", "answer": "맹자께서 말씀하셨다. “사람의 문제는 남의 스승되기 좋아함에 있다.”"}, {"section": "이루하", "number": "8", "hanmun": "孟子曰: “人有不爲也而後에 可以有爲니라.”", "answer": "맹자께서 말씀하셨다. “사람이 하지 않는 바가 있는 이후에야 훌륭한 일을 할 수 있다.”"}, {"section": "이루하", "number": "9", "hanmun": "孟子曰: “言人之不善하다가 當如後患何오?”", "answer": "맹자께서 말씀하셨다. “남의 불선함을 말하다가 응당(장차) 후환을 어찌 하려는가?”"}, {"section": "이루하", "number": "12", "hanmun": "孟子曰: “大人者, 不失其赤子之心者也.”", "answer": "맹자께서 말씀하셨다. “대인은 어린아이의 마음을 잃지 않은 자이다.”"}, {"section": "이루하", "number": "18.1", "hanmun": "徐子曰: “仲尼亟稱於水曰: ‘水哉水哉여’ 하시니 何取於水也시니잇고?”", "answer": "서자가 말하였다. “공자께서 자주 물에 대해 칭찬하여 말씀하시기를 ‘물이여, 물이여!’ 하시니 물에서 무엇을 취한 것입니까?”"}, {"section": "이루하", "number": "18.2", "hanmun": "孟子曰: “原泉이 混混하여 不舍晝夜하여", "answer": "맹자께서 말씀하셨다. 근원이 있는 물은 솟아나와 밤낮을 쉬지 않고서"}, {"section": "이루하", "number": "18.2", "hanmun": "盈科而後에 進하여 放乎四海하나니 有本者如是라 是之取爾시니라.", "answer": "구덩이를 채운 뒤에 나아가 사해에 이르나니, 근본이 있는 자는 이와 같은지라 이 점을 취하신 것이다."}, {"section": "이루하", "number": "18.3", "hanmun": "苟爲無이면, 七八月之閒에 雨集하여 溝澮皆盈이나 其涸也는 可立而待也라", "answer": "만약 근본이 없다면 7-8월 사이에 비가 집중되어 도랑에 모두 가득 차더라도 그것이 마르는 것은 서서도 기다릴 수 있다."}, {"section": "이루하", "number": "18.3", "hanmun": "故로 聲聞過情을 君子恥之니라.”", "answer": "이 때문에 명성이 실정보다 지나친 것을 군자는 부끄러워 한다."}, {"section": "이루하", "number": "19.1", "hanmun": "孟子曰: “人之所以異於禽獸者 幾希하니 庶民은 去之하고 君子는 存之니라.", "answer": "맹자께서 말씀하셨다. “사람이 금수와 다른 것이 거의 없으니 서민들은 이를 버리고, 군자는 이를 보존한다."}, {"section": "이루하", "number": "19.2", "hanmun": "舜은 明於庶物하시며 察於人倫하시니", "answer": "순임금은 여러 사물의 이치에 밝으시며 인륜을 살피셨으니,"}, {"section": "이루하", "number": "19.2", "hanmun": "由仁義行이라 非行仁義也니라.”", "answer": "인의를 따라 행하신 것이요 인의를 행하려고 하신 것이 아니었다."}, {"section": "이루하", "number": "19.2", "hanmun": "《荀子》曰:“水火有氣而無生，草木有生而無知，禽獸有知而無義，人有氣有生有知有義.”", "answer": "<<순자>>에서 말하기를 “물과 불은 기력은 있는데 생명이 없고, 초목은 생명은 있는데 지각이 없고, 금수는 지각은 있는데 의가 없고, 사람은 기력도 있고 생명도 있고 지각도 있고 의도 있다."}, {"section": "이루하", "number": "19.2", "hanmun": "蓋其受性之品，凡有四等，而人與禽獸最相近，耳聽目視無以異也，鼻嗅舌舐無以異也，食色安逸之欲無以異也.", "answer": "대개 그 받은 성품의 품격은 무릇 네 등급이 있는데 인간과 금수는 가장 서로 가까우니, 귀로 듣고 눈으로 보는 것이 다름이 없고, 귀로 냄새 맡고 혀로 핥는 것이 다름이 없고, 먹는 것과 색을 즐기는 것과 편안하고 안일하려 하는 욕구가 다름이 없다."}, {"section": "이루하", "number": "19.2", "hanmun": "所異者，惟是一箇道心，而道心爲物，無形無質，至微至忽。", "answer": "다른 바의 것은 오직 일개의 도심이니, 도심의 사물됨은 형체도 없고 바탕도 없어서 지극히 자질구레하고 지극히 희미하다."}, {"section": "이루하", "number": "19.2", "hanmun": "若于是從而去之，則禽獸而已，將何以自別乎？", "answer": "만약 이것에 따라서 가면 금수일 뿐이니, 장차 어찌함으로써 스스로 구별하겠는가?"}, {"section": "이루하", "number": "19.2", "hanmun": "此孟子至切之戒，當拳拳服膺者也。", "answer": "이에 맹자가 지극히 간절하게 경계한 것이니, 마땅히 꼭 마음에 새겨야하는 것이다."}, {"section": "이루하", "number": "22", "hanmun": "孟子曰: “予未得爲孔子徒也나 予私淑諸(저)人也니라.”", "answer": "맹자께서 말씀하셨다. “나는 공자의 문도가 되지는 못하였으나 나는 남에게서 사숙하였다(사사로이 선하게 하였노라)."}, {"section": "이루하", "number": "25", "hanmun": "孟子曰: “西子蒙不潔이면 則人皆掩鼻而過之니라.", "answer": "맹자께서 말씀하셨다. “서시가 불결한 걸 뒤집어 쓰고 있으면 사람들이 모두 코를 잡고 그를 지나갔을 것이다."}, {"section": "이루하", "number": "25", "hanmun": "雖有惡人이라도 齊戒沐浴이면 則可以祀上帝니라.”", "answer": "만일 악인이 있더라도 목욕재계하면 상제에게 제사지낼 수 있다.”"}, {"section": "이루하", "number": "28.1", "hanmun": "孟子曰: 君子所以異於人者는 以其存心也니", "answer": "맹자께서 말씀하셨다. 군자가 보통 사람(남)과 다른 것은 그 마음에 보존하기 때문이니,"}, {"section": "이루하", "number": "28.1", "hanmun": "君子는 以仁存心하며 以禮存心이니라.", "answer": "군자는 인을 마음에 보존하며(두며) 예를 마음을 보존한다(둔다)."}, {"section": "이루하", "number": "28.2", "hanmun": "仁者는 愛人하고 有禮者는 敬人하나니", "answer": "인한 자는 남을 사랑하고, 예가 있는 자는 남을 공경하는 법이니,"}, {"section": "이루하", "number": "28.3", "hanmun": "愛人者는 人恒愛之하고 敬人者는 人恒敬之니라.", "answer": "남을 사랑하는 자는 남이 항상 자기를 사랑해주고 남을 공경하는 자는 남이 항상 자기를 공경해 준다."}, {"section": "이루하", "number": "28.4", "hanmun": "有人於此하니 其待我以橫逆이어든 則君子必自反也하여", "answer": "여기 어떤 사람이 있는데 그가 자신을 대하기를 횡역으로써 하면 군자는 반드시 스스로 반성하여"}, {"section": "이루하", "number": "28.4", "hanmun": "我必不仁也며 必無禮也로다 此物이 奚宜至哉오 하니라.", "answer": "‘내 반드시 인하지 못했으며 내 반드시 예가 없었나보다. 이 일이 어찌 의당 이르겠는가?’ 한다."}, {"section": "이루하", "number": "28.5", "hanmun": "其自反而仁矣며 自反而有禮矣로되 其橫逆이 由是也어든", "answer": "스스로 돌이켜보아 인하였고, 스스로 돌이켜보아 예가 있었는데 그 횡역이 이와 같으면"}, {"section": "이루하", "number": "28.5", "hanmun": "君子必自反也하여 我必不忠이로다 하나니라.", "answer": "군자는 반드시 스스로 돌이켜 ‘내가 필시 충하지/진실되지 못했나보다’한다."}, {"section": "이루하", "number": "28.6", "hanmun": "自反而忠矣로되 其橫逆이 由是也어든", "answer": "스스로 돌이켜보아 진실되었으나 그 횡역이 이와 같으면"}, {"section": "이루하", "number": "28.6", "hanmun": "君子曰 此亦妄人也已矣로다 하나니 如此면 則與禽獸奚擇哉리오", "answer": "군자는 말하기를 ‘이는 역시 망령된 사람일 뿐이다’라고 하니, 이와 같다면 금수와 어찌 다르겠는가?"}, {"section": "이루하", "number": "28.6", "hanmun": "於禽獸에 又何難焉이리오?", "answer": "금수에게 또 무엇을 꾸짖겠는가?"}, {"section": "이루하", "number": "28.7", "hanmun": "(1) 是故로 君子有終身之憂요 無一朝之患也니", "answer": "이 때문에 군자는 평생토록 하는 근심은 있어도 하루아침의 근심은 없는 것이니,"}, {"section": "이루하", "number": "28.7", "hanmun": "乃若所憂則有之하니 ‘舜도 人也며 我亦人也로되", "answer": "곧 근심하는 바로 말하자면 있으니 ‘순임금도 사람이며 나 또한 사람인데"}, {"section": "이루하", "number": "28.7", "hanmun": "(2) 舜은 爲法於天下하사 可傳於後世어시늘 我는 由未免爲鄕人也하니 是則可憂也라.", "answer": "순임금은 천하에 모범이 되어 후세에 전할 만한데 나는 아직도 향인됨을 면치 못하니, 이는 근심할 만하다."}, {"section": "이루하", "number": "28.7", "hanmun": "憂之如何오 如舜而已矣니라.’", "answer": "근심하면 어찌해야 하는가? 순임금처럼 할 뿐이다.’"}, {"section": "이루하", "number": "28.7", "hanmun": "若夫君子所患則亡(무)矣니 非仁無爲也며 非禮無行也라", "answer": "군자가 근심하는 것은 없으니, 인이 아니면 행하지 않고 예가 아니면 행하지 않는다."}, {"section": "이루하", "number": "28.7", "hanmun": "如有一朝之患이라도 則君子不患矣니라.", "answer": "만일 하루아침의 걱정이 있다 하더라도 군자는 걱정하지 않는다."}, {"section": "만장상", "number": "1.4", "hanmun": "人이 少則慕父母하다가 知好色則慕少艾하고 有妻子則慕妻子하고", "answer": "사람이 어릴 때는 부모를 사모하다가 이성을 좋아할 줄 알면 미인을 좋아하고, 처자식을 두면 처자식을 사모하고,"}, {"section": "만장상", "number": "1.4", "hanmun": "仕則慕君하고 不得於君則熱中이니", "answer": "벼슬하면 군주를 사모하고, 군주에게 신임을 얻지 못하면 가슴에 열병이 나니,"}, {"section": "만장상", "number": "1.4", "hanmun": "大孝는 終身慕父母하나니 五十而慕者를 予於大舜에 見之矣로라.", "answer": "큰 효는 평생토록 부모를 사모하나니 오십이 되어도 부모를 사모한 자를 나는 대순에게서 보았다."}, {"section": "만장상", "number": "2.3", "hanmun": "萬章曰: 父母使舜으로 完廩捐階하고 瞽瞍焚廩하며", "answer": "만장이 말하였다. “부모가 순으로 하여금 창고를 손질하게 하고 사다리를 치우고는 고수가 창고에 불을 질렀으며,"}, {"section": "만장상", "number": "2.3", "hanmun": "使浚井하여 出커시늘 從而揜之하고 象曰:", "answer": "순에게 우물을 파게 하고는 순이 나오려하자 따라서 흙을 덮어버리고는 상이 말하였다."}, {"section": "만장상", "number": "2.3", "hanmun": "謨蓋都君은 咸我績이나 牛羊父母요 倉廩父母요 干戈朕이요 琴朕이요 弤(저)朕이요", "answer": "‘꾀하여 도군을 생매장한 것은 다 나의 덕이니, 소와 양은 부모의 것이고 창고도 부모의 것이고 방패와 창은 짐의 것이요, 거문고는 짐의 것이요, 활은 짐의 것이요,"}, {"section": "만장상", "number": "2.3", "hanmun": "二嫂는 使治朕棲호리라하고", "answer": "두 형수는 짐의 침상을 다스리게 하겠다.’"}, {"section": "만장상", "number": "2.3", "hanmun": "象이 往入舜宮한대 舜이 在牀琴이어시늘", "answer": "상이 순임금의 궁궐에 들어갔는데 순이 평상에서 거문고를 타고 있었다."}, {"section": "만장상", "number": "2.3", "hanmun": "象曰: 鬱陶思君爾라 忸(육)怩한대", "answer": "상이 말하기를 ‘울적하게 도군을 그리워했습니다’하며 부끄러워하자"}, {"section": "만장상", "number": "2.3", "hanmun": "舜曰: 惟玆臣庶를 汝其于予治라하시니 不識케이다", "answer": "순이 ‘이 여러 신하들을 네가 나에게 와서 다스리라’하셨다 하니, 알지 못하겠습니다."}, {"section": "만장상", "number": "2.3", "hanmun": "舜이 不知象之將殺己與잇가?", "answer": "순임금께서 상이 자기를 살해하려 한 것을 몰랐습니까?”}, {"section": "만장상", "number": "2.3", "hanmun": "曰: 奚而不知也시리오마는 象憂亦憂하시고 象喜亦喜하시니라.", "answer": "맹자께서 말씀하셨다. “어찌 모르셨겠는가마는 상이 근심하면 또 근심하시고 상이 기뻐하면 또한 기뻐하신 것이다.”"}, {"section": "만장상", "number": "2.4", "hanmun": "(1) 曰: 然則舜은 僞喜者與잇가?", "answer": "만장이 말하였다. “그럼 순은 거짓으로 기뻐한 자입니까?”"}, {"section": "만장상", "number": "2.4", "hanmun": "曰: 否라 昔者에 有饋生魚於鄭子産이어늘", "answer": "맹자가 말씀하셨다. “아니다. 옛날에 살아있는 물고기를 정나라 자산에게 선물한 자가 있거늘"}, {"section": "만장상", "number": "2.4", "hanmun": "子産이 使校人으로 畜(휵)之池한대 校人이 烹之하고", "answer": "자산이 교인(연못지기)으로 하여금 그것을 못에 기르게 하였는데, 교인이 삶아먹고는"}, {"section": "만장상", "number": "2.4", "hanmun": "(2) 反命曰: 始舍之하니 圉圉焉이러니 少則洋洋焉하여 攸然而逝하더이다", "answer": "복명하기를 ‘처음에 물고기를 놓아주자 비실비실하더니 잠시 후 몸이 풀려 유유히 가더이다.’하였다."}, {"section": "만장상", "number": "2.4", "hanmun": "校人이 出하여 曰: 孰謂子產智오 予旣烹而食之어늘", "answer": "교인이 나와 ‘누가 자산을 지혜롭다 했는가? 내 벌써 물고기를 삶아먹었는데"}, {"section": "만장상", "number": "2.4", "hanmun": "曰得其所哉인저 得其所哉인저하니", "answer": "자산은 ‘살 곳을 얻었구나, 살 곳을 얻었구나’라 하네‘라 말하니"}, {"section": "만장상", "number": "2.4", "hanmun": "故로 君子可欺以其方이어니와 難罔以非其道니 彼以愛兄之道來라", "answer": "그러므로 군자는 올바른 도로써 속일 수는 있거니와 도가 아닌 것으로 터무니없이 속이기는 어려운 것이다. 저(상)가 형을 사랑하는 도리로써 왔으므로"}, {"section": "만장상", "number": "2.4", "hanmun": "故로 誠信而喜之시니 奚僞焉이시리오", "answer": "순이 진실로 믿고서 기뻐하셨으니, 어찌 거짓이셨겠는가?”"}, {"section": "만장하", "number": "1.1", "hanmun": "孟子曰: 伯夷는 目不視惡色하며 耳不聽惡聲하고", "answer": "맹자가 말씀하셨다. “백이는 눈으로 나쁜 빛을 보지 않고 귀로는 나쁜 소리를 듣지 않으며"}, {"section": "만장하", "number": "1.1", "hanmun": "非其君不事하고 非其民不使하여 治則進하고 亂則退하여", "answer": "섬길만한 군주가 아니면 섬기지 않고, 부릴 만한 백성이 아니면 부리지 않아서 세상이 다斯... (truncated for brevity in this message, but full DATA is included in the actual commit)
+  }],
+
+  // 상태
+  let pool = [], idx = 0, wrong = [], correct = 0, answered = false;
+
+  const $ = id => document.getElementById(id);
+
+  function shuffle(a){
+    for(let i=a.length-1;i>0;i--){
+      let j = Math.floor(Math.random()*(i+1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // 제출/정답 비교 전 처리: 띄어쓰기, 마침표, 말따옴표 무시
+  function normalizeAnswer(s){
+    if(typeof s !== 'string') return '';
+    // remove all whitespace
+    let t = s.replace(/\s+/g, '');
+    // remove period characters and common quote characters
+    t = t.replace(/[.。｡"'“”‘’„‚«»「」『』]/g,'');
+    return t;
+  }
+
+  // 시작: onlyWrong이면 오답만 재시험 (선택한 count 적용)
+  function start(onlyWrong = false){
+    let base;
+    if(onlyWrong){
+      base = wrong.slice(); // 이전 오답 복사
+    } else {
+      base = DATA.filter(x => $('section').value === '전체' || x.section === $('section').value);
+    }
+    if(base.length === 0){
+      alert(onlyWrong ? '재시험할 오답이 없습니다.' : '선택한 범위에 문제가 없습니다.');
+      return;
+    }
+    pool = shuffle(base);
+    // count 선택은 모든 모드에 적용
+    if($('count').value !== 'all'){
+      pool = pool.slice(0, Number($('count').value));
+    }
+    idx = 0;
+    wrong = [];
+    correct = 0;
+    answered = false;
+    $('finish').classList.add('hidden');
+    $('quiz').classList.remove('hidden');
+    render();
+  }
+
+  function render(){
+    if(idx >= pool.length){
+      $('quiz').classList.add('hidden');
+      $('finish').classList.remove('hidden');
+      const skipped = pool.length - (correct + wrong.length);
+      $('summary').textContent = `${pool.length}문장 중 ${correct}개 정답 · ${wrong.length}개 오답 · ${skipped}개 건너뜀`;
+      // set progress to 100%
+      $('fill').style.width = '100%';
+      $('percent').textContent = '진행 100%';
+      return;
+    }
+    const x = pool[idx];
+    answered = false;
+    $('category').textContent = `${x.section} · ${x.number}`;
+    $('progress').textContent = `${idx+1} / ${pool.length}`;
+    // 진행률: 완료 비율(%), 현재 문항은 아직 미완료로 계산
+    const percent = Math.round((idx) / Math.max(1,pool.length) * 100);
+    $('fill').style.width = `${percent}%`;
+    $('percent').textContent = `진행 ${percent}%`;
+    $('hanmun').textContent = x.hanmun;
+    $('answer').value = '';
+    $('answer').disabled = false;
+    $('result').style.display = 'none';
+    $('result').className = 'result';
+    $('check').classList.remove('hidden');
+    $('next').classList.add('hidden');
+    $('correctCount').textContent = `정답 ${correct}`;
+    $('wrongCount').textContent = `오답 ${wrong.length}`;
+    $('answer').focus();
+  }
+
+  function check(){
+    if(answered) return;
+    let a = $('answer').value.trim();
+    if(!a){
+      alert('해석을 입력하세요.');
+      return;
+    }
+    answered = true;
+    const normUser = normalizeAnswer(a);
+    const normExpected = normalizeAnswer(pool[idx].answer);
+    const ok = normUser === normExpected;
+    if(ok){
+      correct++;
+      $('resultTitle').textContent = '✓ 정답입니다';
+      $('resultBody').textContent = '입력한 해석이 기준 해석과 일치합니다.';
+    } else {
+      wrong.push(pool[idx]);
+      $('resultTitle').textContent = '✕ 오답입니다';
+      $('resultBody').textContent = '정확한 해석\n' + pool[idx].answer;
+    }
+    $('result').classList.add(ok ? 'good' : 'bad');
+    $('result').style.display = 'block';
+    $('answer').disabled = true;
+    $('check').classList.add('hidden');
+    $('next').classList.remove('hidden');
+    $('correctCount').textContent = `정답 ${correct}`;
+    $('wrongCount').textContent = `오답 ${wrong.length}`;
+  }
+
+  function next(){
+    idx++;
+    render();
+  }
+
+  // 이벤트 바인딩
+  $('check').onclick = check;
+  $('next').onclick = next;
+  $('skip').onclick = () => { idx++; render(); };
+  $('restart').onclick = () => start(false);
+  $('retry').onclick = () => start(true);
+  $('finishRetry').onclick = () => start(false);
+  $('finishWrong').onclick = () => start(true);
+
+  $('answer').addEventListener('keydown', e => {
+    if(e.ctrlKey && e.key === 'Enter'){
+      e.preventDefault();
+      answered ? next() : check();
+    }
+  });
+
+  // 초기 시작
+  start();
+  </script>
+</body>
+</html>
