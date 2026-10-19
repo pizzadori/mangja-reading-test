@@ -14,7 +14,6 @@
     /* Visually hidden for accessible labels */
     .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px}
 
-    /* subtle paper texture using an embedded SVG noise layer */
     :root{
       --bg:#f7f5f1; /* soft paper */
       --card:#fffefb;
@@ -26,7 +25,7 @@
 
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;color:var(--ink);font-family:'Noto Sans KR',system-ui,'Malgun Gothic',sans-serif;-webkit-font-smoothing:antialiased;background-color:var(--bg);background-image:linear-gradient(18[...]
+    body{margin:0;color:var(--ink);font-family:'Noto Sans KR',system-ui,'Malgun Gothic',sans-serif;-webkit-font-smoothing:antialiased;background-color:var(--bg);}
 
     .shell{max-width:920px;margin:48px auto;padding:36px}
 
@@ -34,34 +33,37 @@
     .logo{font-family:'Noto Serif KR','Noto Serif TC',serif;font-size:20px;letter-spacing:1px;color:var(--ink)}
     .logo .sub{color:var(--muted);font-size:12px;margin-left:8px}
 
-    .seal{border:2px solid rgba(36,89,67,0.08);padding:6px 12px;border-radius:999px;background:linear-gradient(180deg, rgba(36,89,67,0.03), transparent);color:var(--accent);font-weight:600;letter-[...]
+    .seal{border:2px solid rgba(36,89,67,0.08);padding:6px 12px;border-radius:999px;background:linear-gradient(180deg, rgba(36,89,67,0.03), transparent);color:var(--accent);font-weight:600;letter-spacing:1px}
 
-    h1{font-family:'Noto Serif KR','Noto Serif TC',serif;font-size:clamp(34px,6vw,56px);line-height:1.02;margin:26px 0 8px;color:var(--ink);text-align:center}
-    p.sub{color:var(--muted);line-height:1.7;margin:0 0 30px;font-size:15px}
+    h1{font-family:'Noto Serif KR','Noto Serif TC',serif;font-size:clamp(28px,5vw,48px);line-height:1.02;margin:26px 0 8px;color:var(--ink);text-align:center}
+    p.sub{color:var(--muted);line-height:1.6;margin:0 0 24px;font-size:15px;text-align:center}
 
     .toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+    .toolbar .left{display:flex;gap:10px;align-items:center}
+    .toolbar .spacer{flex:1}
+
     select,button,textarea{font:inherit}
     select,button{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:10px 14px;color:var(--ink);box-shadow:0 4px 10px rgba(20,20,20,0.03)}
     button{cursor:pointer;transition:box-shadow .12s ease,transform .08s ease}
     button:active{transform:translateY(1px)}
     button.primary{background:var(--accent);color:white;border-color:var(--accent);box-shadow:0 6px 18px rgba(36,89,67,0.12)}
+    button.ghost{background:transparent;border-color:transparent;color:var(--accent);padding:8px 12px}
 
     /* focus styles - visible for keyboard users */
     :focus{outline: none}
-    :focus-visible{outline:3px solid rgba(36,89,67,0.16);outline-offset:3px;border-radius:8px}
+    :focus-visible{outline:3px solid rgba(36,89,67,0.12);outline-offset:3px;border-radius:8px}
 
     .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:32px;box-shadow:0 18px 40px rgba(34,40,30,0.05);transition:transform .18s ease}
     .panel:hover{transform:translateY(-3px)}
 
     .top{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px}
-    .bar{height:10px;background:linear-gradient(90deg,#f1f0ec,#faf9f6);border-radius:10px;overflow:hidden;margin:16px 0 28px}
+    .bar{height:10px;background:linear-gradient(90deg,#f1f0ec,#faf9f6);border-radius:10px;overflow:hidden;margin:16px 0 20px}
     .fill{height:100%;background:linear-gradient(90deg,var(--accent),#1f6a54);width:0%;transition:width .45s cubic-bezier(.2,.9,.3,1)}
 
-    /* PRIORITIZE fonts that include Traditional/Full-width CJK glyphs for 한자 display */
-    .hanmun{font-family:'Noto Serif TC','Source Han Serif','Noto Serif KR','MingLiU','PMingLiU','SimSun','Apple SD Gothic Neo','Malgun Gothic',serif;font-weight:700;letter-spacing:.04em;font-size:[...]
+    /* Hanmun area: larger, centered, readable */
+    .hanmun{font-family:'Noto Serif TC','Source Han Serif','Noto Serif KR','MingLiU','PMingLiU','SimSun','Apple SD Gothic Neo','Malgun Gothic',serif;font-weight:700;letter-spacing:.02em;font-size:clamp(20px,6vw,44px);line-height:1.35;text-align:center;padding:20px 12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));min-height:84px;display:flex;align-items:center;justify-content:center;white-space:pre-wrap}
 
-    /* Fallback styling for when 한문 is missing */
-    .hanmun .fallback { color:var(--muted); font-weight:600; font-size:clamp(20px,4.5vw,34px); line-height:1.4 }
+    .hanmun .fallback { color:var(--muted); font-weight:600; font-size:clamp(16px,3.5vw,22px); line-height:1.4 }
     .hanmun.empty .fallback { opacity:0.95 }
 
     .fieldlabel{display:block;font-size:13px;font-weight:700;margin-bottom:10px}
@@ -75,11 +77,11 @@
     .result.good{background:linear-gradient(180deg,#eaf7ef,#f6fdf8)}
     .result.bad{background:linear-gradient(180deg,#fff6f5,#fffaf9)}
     .result strong{display:block;margin-bottom:8px}
-    .result .answer{white-space:pre-wrap;color:var(--ink);font-size:15px;word-break:break-word;overflow:auto;max-height:360px}
+    .result .answer{white-space:pre-wrap;color:var(--ink);font-size:15px;word-break:break-word;overflow:auto;max-height:240px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.6);border:1px dashed var(--line)}
 
     .similarity{display:block;margin-top:8px;font-size:13px;color:var(--muted)}
 
-    .stats{display:flex;gap:18px;color:var(--muted);font-size:13px;margin-top:18px}
+    .stats{display:flex;gap:18px;color:var(--muted);font-size:13px;margin-top:18px;align-items:center}
 
     .hidden{display:none!important}
     .finish{text-align:center;padding:36px 0}
@@ -89,7 +91,7 @@
 
     footer.footer{margin-top:55px;padding-top:20px;border-top:1px solid var(--line);text-align:center;font-family:Georgia,serif;font-size:13px;letter-spacing:1.4px;color:var(--muted)}
 
-    @media(max-width:720px){.shell{padding:20px}.toolbar>*{flex:1}.panel{padding:20px}.actions button{flex:1}.hanmun{font-size:20px}}
+    @media(max-width:720px){.shell{padding:20px}.toolbar>*{flex:1}.panel{padding:20px}.actions button{flex:1}.hanmun{font-size:20px;padding:14px}}
 
     /* Respect user preference for reduced motion */
     @media (prefers-reduced-motion: reduce){
@@ -111,31 +113,34 @@
     <h1>맹자읽기 TEST<span style="color:var(--accent)">.</span></h1>
     <p class="sub">한문을 읽고, 해석을 기억하고, 직접 써보세요.<br>PPT에 적힌 해석과 정확히 일치하는 답안만 정답으로 인정합니다.</p>
 
-    <div class="toolbar">
-      <label for="section" class="visually-hidden">범위 선택</label>
-      <select id="section" aria-label="시험 범위 선택">
-        <option value="전체">전체 범위</option>
-        <option>이루상</option>
-        <option>이루하</option>
-        <option>만장상</option>
-        <option>만장하</option>
-      </select>
+    <div class="toolbar" role="region" aria-label="시험 도구">
+      <div class="left">
+        <label for="section" class="visually-hidden">범위 선택</label>
+        <select id="section" aria-label="시험 범위 선택">
+          <option value="전체">전체 범위</option>
+          <option>이루상</option>
+          <option>이루하</option>
+          <option>만장상</option>
+          <option>만장하</option>
+        </select>
 
-      <label for="count" class="visually-hidden">문제 개수</label>
-      <select id="count" aria-label="문제 개수">
-        <option value="all">전체 문제</option>
-        <option value="5">5문제</option>
-        <option value="10">10문제</option>
-        <option value="15">15문제</option>
-        <option value="20">20문제</option>
-        <option value="30">30문제</option>
-        <option value="50">50문제</option>
-      </select>
+        <label for="count" class="visually-hidden">문제 개수</label>
+        <select id="count" aria-label="문제 개수">
+          <option value="all">전체 문제</option>
+          <option value="5">5문제</option>
+          <option value="10">10문제</option>
+          <option value="15">15문제</option>
+          <option value="20">20문제</option>
+          <option value="30">30문제</option>
+          <option value="50">50문제</option>
+        </select>
 
-      <div style="flex:1"></div>
+        <button id="restart" type="button" class="ghost" aria-label="시험 새로 시작">시험 새로 시작</button>
+        <button id="retry" type="button" aria-label="오답만 재시험">오답만 재시험</button>
+      </div>
 
-      <button id="restart" type="button" class="ghost" aria-label="시험 새로 시작">시험 새로 시작</button>
-      <button id="retry" type="button" aria-label="오답만 재시험">오답만 재시험</button>
+      <div class="spacer" aria-hidden="true"></div>
+
     </div>
 
     <div class="panel">
@@ -188,7 +193,7 @@
       </div>
     </div>
 
-    <div class="hint">※ 띄어쓰기, 문장부호, 맞춤법까지 원문과 일치해야 합니다. 답안 앞뒤의 불필요한 공백만 제거합니다.<br>※ 모든 문제는 매 시험[...]
+    <div class="hint">※ 띄어쓰기, 문장부호, 맞춤법까지 원문과 일치해야 합니다. 답안 앞뒤의 불필요한 공백만 제거합니다.<br>※ 모든 문제는 매 시험마다 무작위로 섞입니다.</div>
 
     <footer class="footer">made by mandeu</footer>
   </main>
@@ -228,7 +233,7 @@
   function normalizeAnswer(s){
     if(typeof s !== 'string') return '';
     let t = s.replace(/\s+/g, '');
-    t = t.replace(/[.。｡"'“”‘’„‚«»「」『』]/g,'');
+    t = t.replace(/[.。｡\"'“”‘’„‚«»「」『』]/g,'');
     return t;
   }
 
@@ -351,6 +356,7 @@
       e.preventDefault();
       answered ? next() : check();
     }
+    // Enter alone should insert newline; Shift+Enter submits? keep default
   });
 
   // Initialize
