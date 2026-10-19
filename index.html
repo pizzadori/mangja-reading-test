@@ -1,104 +1,348 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>맹자읽기 TEST</title>
   <meta name="description" content="맹자 읽기 II - 한문 암송/해석 학습용 테스트 페이지">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+KR:wght@300;400;600,700&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#f5f3ef;
       --panel:#ffffff;
-      --ink:#181d20;
-      --muted:#66707a;
-      --accent:#1f4d42;
-      --accent-soft:rgba(31,77,66,0.06);
-      --line:#e8e4df;
-      --radius:12px;
-      --maxw: 860px;
+      --ink:#171a1d;
+      --muted:#666f76;
+      --accent:#1a4a41;
+      --accent-soft:rgba(26,74,65,0.05);
+      --line:#e7e3df;
+      --danger:#f3d9d5;
+      --danger-stroke:#e0c0bc;
+      --radius:10px;
+      --maxw:860px;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',system-ui,-apple-system,'Malgun Gothic',sans-serif}
-    body{padding:16px 0}
+    html,body{
+      height:100%;
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:'Noto Sans KR',system-ui,-apple-system,'Malgun Gothic',sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
 
-    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px}
-    .card{background:var(--panel);border:1px solid rgba(17,24,39,0.03);border-radius:10px;padding:18px 18px 16px;box-shadow:0 8px 24px rgba(15,23,42,0.02)}
+    body{
+      padding:16px 0;
+    }
 
-    header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:10px}
-    .brand{font-family:'Noto Serif TC','Noto Serif',serif;font-weight:700;font-size:18px;letter-spacing:.02em}
-    .brand .sub{font-size:12px;color:var(--muted);font-weight:600;margin-left:6px}
-    .seal{display:inline-flex;align-items:center;padding:5px 8px;border:1px solid rgba(31,77,66,0.12);border-radius:999px;color:var(--accent);background:rgba(31,77,66,0.02);font-size:12px;font-weight:600;letter-spacing:.06em}
+    .wrap{
+      max-width:var(--maxw);
+      margin:0 auto;
+      padding:0 18px;
+    }
 
-    h1{font-family:'Noto Serif TC','Noto Serif',serif;font-size:26px;line-height:1.05;margin:12px 0 8px;color:var(--ink)}
-    .lead{margin:0 0 10px;color:var(--muted);font-size:13px;line-height:1.65;max-width:640px}
+    .card{
+      background:var(--panel);
+      border:1px solid rgba(17,24,39,0.03);
+      border-radius:12px;
+      padding:18px 18px 14px;
+      box-shadow:0 8px 24px rgba(15,23,42,0.02);
+    }
 
-    .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 14px}
-    select,button,textarea{font:inherit}
-    select{border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:8px;color:var(--ink);font-size:13px}
-    .btn{border:1px solid var(--line);background:transparent;padding:8px 12px;border-radius:8px;color:var(--ink);cursor:pointer;font-size:13px;transition:all .12s ease}
-    .btn:hover{border-color:rgba(31,77,66,0.2)}
-    .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-    .btn.ghost{color:var(--accent);background:rgba(31,77,66,0.02)}
-    .spacer{flex:1}
+    .topbar{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:10px;
+    }
 
-    .panel{display:flex;flex-direction:column;gap:10px}
-    .meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px;gap:12px}
-    .progress{height:8px;border-radius:999px;background:var(--line);overflow:hidden}
-    .progress > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#2d6a5f);transition:width .3s ease}
+    .brand{
+      font-family:'Noto Serif TC','Noto Serif',serif;
+      font-weight:700;
+      font-size:17px;
+      letter-spacing:.02em;
+      line-height:1.1;
+    }
 
-    .hanmun{display:flex;align-items:center;justify-content:center;text-align:center;min-height:86px;padding:18px 12px;border-radius:10px;background:var(--accent-soft);font-family:'Noto Serif TC','Noto Serif',serif;font-weight:700;font-size:21px;line-height:1.6;color:var(--ink)}
-    .hanmun .fallback{color:var(--muted);font-size:14px}
+    .brand .sub{
+      color:var(--muted);
+      font-size:12px;
+      font-weight:600;
+      margin-left:6px;
+    }
 
-    label.field{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px}
-    textarea#answer{width:100%;min-height:120px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:14px;line-height:1.7;color:var(--ink);resize:vertical}
-    textarea#answer:focus,select:focus,.btn:focus{outline:2px solid rgba(31,77,66,0.15);outline-offset:2px}
+    .seal{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:6px 10px;
+      border:1px solid rgba(26,74,65,0.12);
+      border-radius:999px;
+      background:rgba(26,74,65,0.02);
+      color:var(--accent);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.07em;
+      white-space:nowrap;
+    }
 
-    .actions{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-    .actions .group{display:flex;gap:8px;flex-wrap:wrap}
+    h1{
+      font-family:'Noto Serif TC','Noto Serif',serif;
+      font-size:28px;
+      line-height:1.1;
+      margin:12px 0 10px;
+      color:var(--ink);
+    }
 
-    .result{display:none;padding:12px;border-radius:10px;font-size:13px;line-height:1.65}
-    .result.good{background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);color:#0a5d45}
-    .result.bad{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.12);color:#991b1b}
-    .result .answer{margin-top:8px;white-space:pre-wrap}
+    .lead{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+      max-width:720px;
+    }
 
-    .stats{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-top:2px}
-    .hidden{display:none !important}
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      margin:14px 0 12px;
+    }
 
-    .finish{display:none;text-align:center;padding:18px 8px 6px}
-    .finish h2{font-size:28px;margin:8px 0 10px;line-height:1.2}
-    .finish p{color:var(--muted);margin:0}
+    select,button,textarea{
+      font:inherit;
+    }
 
-    footer{margin-top:12px;padding-top:8px;text-align:center;color:var(--muted);font-size:12px;letter-spacing:.04em}
+    select{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      padding:8px 10px;
+      border-radius:8px;
+      font-size:13px;
+      min-width:110px;
+    }
 
-    @media (max-width: 600px){
+    .btn{
+      border:1px solid var(--line);
+      background:transparent;
+      color:var(--ink);
+      padding:8px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      transition:all .12s ease;
+      font-size:13px;
+    }
+
+    .btn:hover{
+      border-color:rgba(26,74,65,0.2);
+    }
+
+    .btn.primary{
+      background:var(--accent);
+      color:#fff;
+      border-color:var(--accent);
+    }
+
+    .btn.ghost{
+      color:var(--accent);
+      background:rgba(26,74,65,0.02);
+    }
+
+    .meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      font-size:12px;
+      color:var(--muted);
+      margin-top:6px;
+    }
+
+    .progress{
+      width:100%;
+      height:8px;
+      background:var(--line);
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:8px;
+      margin-bottom:10px;
+    }
+
+    .progress > i{
+      display:block;
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,var(--accent),#2d6a5f);
+      transition:width .3s ease;
+    }
+
+    .hanmun{
+      display:block;
+      min-height:92px;
+      padding:18px 14px;
+      border-radius:8px;
+      background:rgba(26,74,65,0.02);
+      font-family:'Noto Serif TC','Noto Serif',serif;
+      font-weight:700;
+      font-size:21px;
+      line-height:1.5;
+      color:var(--ink);
+      letter-spacing:0.02em;
+      text-align:left;
+      white-space:pre-wrap;
+    }
+
+    .field{
+      margin-top:18px;
+    }
+
+    .fieldlabel{
+      display:block;
+      margin-bottom:8px;
+      font-size:13px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    textarea#answer{
+      width:100%;
+      min-height:120px;
+      resize:vertical;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+      font-size:14px;
+      line-height:1.7;
+      color:var(--ink);
+    }
+
+    textarea#answer:focus,
+    select:focus,
+    .btn:focus{
+      outline:2px solid rgba(26,74,65,0.14);
+      outline-offset:2px;
+    }
+
+    .actions{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      margin-top:14px;
+      flex-wrap:wrap;
+    }
+
+    .actions .group{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    /* result area */
+    .result{
+      display:none;
+      margin-top:18px;
+      padding:14px;
+      border-radius:10px;
+      background:var(--danger);
+      border:1px solid var(--danger-stroke);
+    }
+
+    .result strong{
+      display:block;
+      margin-bottom:8px;
+      font-size:16px;
+      color:var(--ink);
+    }
+
+    .result .answer{
+      margin:0;
+      white-space:pre-wrap;
+      word-break:break-word;
+      max-height:50vh;
+      overflow:auto;
+      padding:8px;
+      border-radius:6px;
+      background:rgba(255,255,255,0.35);
+      line-height:1.7;
+    }
+
+    .stats{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top:12px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+    .finish{
+      display:none;
+      text-align:center;
+      padding:18px 8px 6px;
+    }
+
+    .finish h2{
+      font-size:30px;
+      margin:8px 0 10px;
+      line-height:1.2;
+    }
+
+    .finish p{
+      margin:0;
+      color:var(--muted);
+    }
+
+    footer{
+      text-align:center;
+      margin-top:12px;
+      padding-top:8px;
+      color:var(--muted);
+      font-size:12px;
+      letter-spacing:.04em;
+    }
+
+    .visually-hidden{
+      position:absolute!important;
+      width:1px;height:1px;
+      overflow:hidden;
+      clip:rect(1px,1px,1px,1px);
+      white-space:nowrap;
+      border:0;padding:0;margin:-1px;
+    }
+
+    @media (max-width:640px){
       body{padding:10px 0}
       .card{padding:14px 14px 12px}
-      .toolbar{gap:6px}
-      .btn,select{width:auto}
-      .hanmun{min-height:74px;padding:14px 10px;font-size:18px}
+      .hanmun{font-size:18px;min-height:72px;padding:14px 10px}
       h1{font-size:22px}
-      .lead{font-size:12px}
+      .toolbar{gap:6px}
+      select{min-width:unset}
       .actions{align-items:stretch}
       .actions .group,.actions .btn{flex:1}
       .actions .btn{justify-content:center}
     }
-
-    .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <header>
-        <div>
-          <div class="brand">孟子讀記 <span class="sub">/ II</span></div>
-          <h1>맹자읽기 TEST</h1>
-          <p class="lead">한문을 읽고, 해석을 기억하고, 직접 써보세요. PPT에 적힌 해석과 정확히 일치하는 답안만 정답으로 인정합니다.</p>
-        </div>
+      <header class="topbar">
+        <div class="brand">孟子讀記 <span class="sub">/ II</span></div>
         <div class="seal">白紙試驗</div>
       </header>
+
+      <h1>맹자읽기 TEST</h1>
+      <p class="lead">한문을 읽고, 해석을 기억하고, 직접 써보세요. PPT에 적힌 해석과 정확히 일치하는 답안만 정답으로 인정합니다.</p>
 
       <div class="toolbar" role="toolbar" aria-label="시험 도구">
         <label class="visually-hidden" for="section">범위 선택</label>
@@ -123,7 +367,7 @@
         <button id="retry" class="btn" type="button">오답만 재시험</button>
       </div>
 
-      <section class="panel" id="quiz">
+      <div class="panel">
         <div class="meta">
           <span id="category" aria-live="polite"></span>
           <span id="progress" aria-live="polite"></span>
@@ -134,11 +378,11 @@
         </div>
 
         <div id="hanmun" class="hanmun" role="region" aria-live="polite" aria-label="한문 문장">
-          <span class="fallback">한문 문장이 여기 표시됩니다.</span>
+          <span>한문 문장이 여기 표시됩니다.</span>
         </div>
 
-        <div>
-          <label class="field" for="answer">나의 해석</label>
+        <div class="field">
+          <label class="fieldlabel" for="answer">나의 해석</label>
           <textarea id="answer" placeholder="한글 해석을 정확히 입력하세요." spellcheck="false" aria-label="해석 입력"></textarea>
         </div>
 
@@ -160,15 +404,15 @@
           <span id="wrongCount">오답 0</span>
           <span id="percent">진행 0%</span>
         </div>
-      </section>
+      </div>
 
-      <div class="finish" id="finish">
+      <div id="finish" class="finish">
         <div style="font-size:36px;line-height:1">卷</div>
         <h2>시험 완료</h2>
         <p id="summary"></p>
         <div style="display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap">
-          <button class="btn primary" type="button" id="finishRetry">다시 풀기</button>
-          <button class="btn" type="button" id="finishWrong">오답 재시험</button>
+          <button id="finishRetry" class="btn primary" type="button">다시 풀기</button>
+          <button id="finishWrong" class="btn" type="button">오답 재시험</button>
         </div>
       </div>
     </div>
@@ -178,12 +422,108 @@
 
   <script>
   const DATA = [
-    {"section":"이루상","number":"1.1","hanmun":"孟子曰: 離婁(이루)之明과 公輸子(공수자)之巧로도 不以規矩면 不能成方圓이요","answer":"맹자께서 말씀하였고"},
-    {"section":"이루상","number":"1.1-2","hanmun":"師曠(사광)之聰으로도 不以六律이면 不能正五音이요","answer":"사광의 귀밝음으로도 6율을 쓰지 않으면 5음을 바로잡지 못하니"},
-    {"section":"이루상","number":"1.1-3","hanmun":"堯舜之道로도 不以仁政이면 不能平治天下니라.","answer":"요순의 도로도 어진 정치를 쓰지 않으면 천하를 평정할 수 없느니라."},
-    {"section":"이루상","number":"1.2","hanmun":"今有仁心,仁聞이로되 而民이 不被其澤하여","answer":"지금 어진 마음과 어진 명성이 있으나 백성이 그 은혜를 입지 아니하니"},
-    {"section":"이루상","number":"1.2-2","hanmun":"不可法於後世者는 不行先王之道也일새니라.","answer":"후세에 법이 되지 못하는 것은 선왕의 도를 행하지 아니하기 때문이니라."},
-    {"section":"이루상","number":"1.3","hanmun":"故로 曰; ‘徒善이 不足以爲政이요 徒法이 不能以自行이라’ 하니라.","answer":"그러므로 이르기를, ‘한갓 선함만으로는 정치를 할 수 없고 한갓 법만으로는 스스로 행해지지 못한다.’ 하니라."}
+    {
+      "section":"이루상",
+      "number":"1.1",
+      "hanmun":"孟子曰: 離婁(이루)之明과 公輸子(공수자)之巧로도 不以規矩면 不能成方圓이요",
+      "answer":"맹자께서 말씀하였다. “이루의 눈밝음과 공수자의 재주로도 규구를 쓰지 않으면 네모와 원을 만들 수 없고, "
+    },
+    {
+      "section":"이루상",
+      "number":"1.1-2",
+      "hanmun":"師曠(사광)之聰으로도 不以六律이면 不能正五音이요",
+      "answer":"사광의 귀밝음으로도 6율을 쓰지 않으면 5음을 바로잡지 못하니,"
+    },
+    {
+      "section":"이루상",
+      "number":"1.1-3",
+      "hanmun":"堯舜之道로도 不以仁政이면 不能平治天下니라.",
+      "answer":"요순의 도로도 어진 정치를 쓰지 않으면 천하를 평정할 수 없다."
+    },
+    {
+      "section":"이루상",
+      "number":"1.2",
+      "hanmun":"今有仁心,仁聞이로되 而民이 不被其澤하여",
+      "answer":"지금 (왕이) 어진 마음과 어진 명성이 있으나 백성이 그 은택을 입지 못하여"
+    },
+    {
+      "section":"이루상",
+      "number":"1.2-2",
+      "hanmun":"不可法於後世者는 不行先王之道也일새니라.",
+      "answer":"후세에 법이 되지 못하는 것은 선왕의 도를 행하지 않기 때문이다."
+    },
+    {
+      "section":"이루상",
+      "number":"1.3",
+      "hanmun":"故로 曰; ‘徒善이 不足以爲政이요 徒法이 不能以自行이라’ 하니라.",
+      "answer":"그러므로 이르기를, ‘한갓 선한 마음만으로는 정치를 할 수 없고, 한갓 법만으로는 스스로 행해지지 못한다.’고 한다."
+    },
+    {
+      "section":"이루상",
+      "number":"1.4",
+      "hanmun":"詩云 不愆不忘은 率由舊章이라 하니",
+      "answer":"시경에 이르기를, ‘잘못하지 않고 잊지 않음은 옛 법을 따르기 때문이다.’라고 하니,"
+    },
+    {
+      "section":"이루상",
+      "number":"1.7",
+      "hanmun":"是以로 惟仁者아 宜在高位니",
+      "answer":"이 때문에 오직 어진 자만이 높은 지위에 있어야 하니,"
+    },
+    {
+      "section":"이루상",
+      "number":"1.7-2",
+      "hanmun":"不仁而在高位면 是는 播其惡於衆也니라.",
+      "answer":"어질지 않고서 높은 지위에 있으면 이는 그 악을 대중에게 퍼뜨리는 것이다."
+    },
+    {
+      "section":"이루상",
+      "number":"4.1",
+      "hanmun":"孟子曰: 愛人不親이어든 反其仁하고 治人不治어든 反其智하고 禮人不答이어든 反其敬이니라.",
+      "answer":"맹자께서 말씀하셨다. “남을 사랑해도 친하지 않거든 그 인을 돌이켜보고, 남을 다스려도 다스려지지 않거든 그 지략을 돌이켜보고, 사람에게 예를 올렸는데 답례하지 않거든 그 공경스러움을 돌이켜보아야 한다.”"
+    },
+    {
+      "section":"이루상",
+      "number":"4.2",
+      "hanmun":"行有不得者어든 皆反求諸(저)己니 其身正而天下歸之니라.",
+      "answer":"행하고서도 얻지 못하는 것이 있다면, 모두 돌이켜 자기 자신을 찾으니, 자기 몸이 바르다면 천하가 돌아온다."
+    },
+    {
+      "section":"이루상",
+      "number":"4.3",
+      "hanmun":"詩云 永言配命이 自求多福이라 하니라.",
+      "answer":"시경에 이르기를, ‘길이 천명에 부합할 것을 생각함이 스스로 복을 많이 구하는 길이다.’ 하였다."
+    },
+    {
+      "section":"이루하",
+      "number":"8.4",
+      "hanmun":"夫人必自侮然後에 人侮之하며",
+      "answer":"사람은 반드시 스스로 업신여긴 후에 남이 그를 업신여기며,"
+    },
+    {
+      "section":"이루하",
+      "number":"8.5",
+      "hanmun":"太甲曰: 天作孽은 猶可違어니와 自作孽은 不可活이라 하니 此之謂也니라.",
+      "answer":"태갑이 이르기를, ‘하늘이 지은 재앙은 그래도 피할 수 있지만, 스스로 지은 재앙은 살 수가 없다.’라고 하였으니 이를 이른 것이다."
+    },
+    {
+      "section":"이루하",
+      "number":"10.1",
+      "hanmun":"孟子曰: 自暴者는 不可與有言也요 自棄者는 不可與有爲也니라.",
+      "answer":"맹자께서 말씀하셨다. ‘스스로 해치는 자는 더불어 말할 수 없고, 스스로 버리는 자는 더불어 일을 할 수 없으니,’"
+    },
+    {
+      "section":"이루하",
+      "number":"10.2",
+      "hanmun":"仁은 人之安居也요 義는 人之正路也라.",
+      "answer":"인은 사람의 편안한 집이고, 의는 사람의 바른 길이다."
+    },
+    {
+      "section":"이루하",
+      "number":"10.3",
+      "hanmun":"曠安居而弗居며 舍正路而不由하니 哀哉라!",
+      "answer":"편안한 집을 비워두고 거처하지 않으며, 바른 길을 버려두고 따르지 않으니 슬프구나!"
+    }
   ];
 
   let pool = [], idx = 0, wrong = [], correct = 0, answered = false;
@@ -199,9 +539,19 @@
 
   function normalizeAnswer(s){
     if(typeof s !== 'string') return '';
-    let t = s.replace(/\s+/g,'');
-    t = t.replace(/[.。｡"'“”‘’「」『』]/g,'');
+    let t = s.replace(/\s+/g, '');
+    t = t.replace(/[.。｡\"'“”‘’「」『』]/g, '');
     return t;
+  }
+
+  function escapeHtml(str){
+    if(typeof str !== 'string') return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
 
   function start(onlyWrong = false){
@@ -211,18 +561,22 @@
     } else {
       base = DATA.filter(x => $('section').value === '전체' || x.section === $('section').value);
     }
+
     if(base.length === 0){
       alert(onlyWrong ? '재시험할 오답이 없습니다.' : '선택한 범위에 문제가 없습니다.');
       return;
     }
+
     pool = shuffle(base);
     if($('count').value !== 'all'){
       pool = pool.slice(0, Number($('count').value));
     }
+
     idx = 0;
     wrong = [];
     correct = 0;
     answered = false;
+
     $('finish').style.display = 'none';
     $('quiz').style.display = 'block';
     render();
@@ -237,8 +591,8 @@
 
   function render(){
     if(idx >= pool.length){
-      $('quiz').style.display='none';
-      $('finish').style.display='block';
+      $('quiz').style.display = 'none';
+      $('finish').style.display = 'block';
       const skipped = pool.length - (correct + wrong.length);
       $('summary').textContent = `${pool.length}문장 중 ${correct}개 정답 · ${wrong.length}개 오답 · ${skipped}개 건너뜀`;
       setProgress(100);
@@ -248,35 +602,39 @@
 
     const x = pool[idx];
     answered = false;
+
     $('category').textContent = `${x.section} · ${x.number}`;
-    $('progress').textContent = `${idx+1} / ${pool.length}`;
-    const percent = Math.round((idx) / Math.max(1,pool.length) * 100);
+    $('progress').textContent = `${idx + 1} / ${pool.length}`;
+
+    const percent = Math.round((idx) / Math.max(1, pool.length) * 100);
     setProgress(percent);
     $('percent').textContent = `진행 ${percent}%`;
 
     const hanEl = $('hanmun');
-    const hanText = (x.hanmun == null) ? '' : String(x.hanmun).trim();
-    if (hanText) {
-      hanEl.textContent = hanText;
-    } else {
-      hanEl.innerHTML = '<span class="fallback">한문 문장이 여기 표시됩니다.</span>';
-    }
+    hanEl.textContent = x.hanmun || '한문 문장이 여기 표시됩니다.';
+    $('answer').value = '';
+    $('answer').disabled = false;
 
-    $('answer').value='';
-    $('answer').disabled=false;
-    $('result').style.display='none';
-    $('result').className='result';
+    $('result').style.display = 'none';
+    $('result').className = 'result';
+
     $('check').classList.remove('hidden');
     $('next').classList.add('hidden');
+
     $('correctCount').textContent = `정답 ${correct}`;
     $('wrongCount').textContent = `오답 ${wrong.length}`;
+
     $('answer').focus();
   }
 
   function check(){
     if(answered) return;
-    let a = $('answer').value.trim();
-    if(!a){ alert('해석을 입력하세요.'); return; }
+
+    const a = $('answer').value.trim();
+    if(!a){
+      alert('해석을 입력하세요.');
+      return;
+    }
 
     answered = true;
     const ok = normalizeAnswer(a) === normalizeAnswer(pool[idx].answer);
@@ -284,23 +642,30 @@
     if(ok){
       correct++;
       $('resultTitle').textContent = '✓ 정답입니다';
-      $('resultBody').textContent = '입력한 해석이 기준 해석과 일치합니다.';
+      $('resultBody').innerHTML = '<div>' + escapeHtml('입력한 해석이 기준 해석과 일치합니다.') + '</div>';
     } else {
       wrong.push(pool[idx]);
       $('resultTitle').textContent = '✕ 오답입니다';
-      $('resultBody').textContent = '정확한 해석\n' + pool[idx].answer;
+      const expected = pool[idx].answer || '';
+      $('resultBody').innerHTML =
+        '<div>' + escapeHtml('정확한 해석') + '</div>' +
+        '<div style="margin-top:6px">' + escapeHtml(expected).replace(/\n/g, '<br>') + '</div>';
     }
 
     $('result').classList.add(ok ? 'good' : 'bad');
-    $('result').style.display='block';
-    $('answer').disabled=true;
+    $('result').style.display = 'block';
+    $('answer').disabled = true;
     $('check').classList.add('hidden');
     $('next').classList.remove('hidden');
+
     $('correctCount').textContent = `정답 ${correct}`;
     $('wrongCount').textContent = `오답 ${wrong.length}`;
   }
 
-  function next(){ idx++; render(); }
+  function next(){
+    idx++;
+    render();
+  }
 
   $('check').onclick = check;
   $('next').onclick = next;
