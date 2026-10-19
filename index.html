@@ -64,11 +64,11 @@
     .actions{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px}
     .actions .group{display:flex;gap:8px}
 
-    .result{display:none;border-radius:10px;padding:18px;margin-top:18px;line-height:1.75;background:#f6f7f5;border:1px solid var(--line)}
+    .result{display:none;border-radius:10px;padding:18px;margin-top:18px;line-height:1.75;background:#f6f7f5;border:1px solid var(--line);overflow:visible}
     .result.good{background:linear-gradient(180deg,#eaf7ef,#f6fdf8)}
     .result.bad{background:linear-gradient(180deg,#fff6f5,#fffaf9)}
     .result strong{display:block;margin-bottom:8px}
-    .result .answer{white-space:pre-wrap}
+    .result .answer{white-space:pre-wrap;color:var(--ink);font-size:15px;word-break:break-word;overflow:auto;max-height:360px}
 
     .similarity{display:block;margin-top:8px;font-size:13px;color:var(--muted)}
 
